@@ -1,0 +1,6 @@
+@MailWarehouse_HostAddress = http://localhost:5140
+
+GET {{MailWarehouse_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
