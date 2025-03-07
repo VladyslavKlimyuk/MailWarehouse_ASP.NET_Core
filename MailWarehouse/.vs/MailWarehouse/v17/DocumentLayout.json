@@ -5,6 +5,41 @@
     {
       "AbsoluteMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|c:\\users\\lenovo\\source\\repos\\vladyslavklimyuk\\mailwarehouse_asp.net_core\\mailwarehouse\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|c:\\users\\lenovo\\source\\repos\\vladyslavklimyuk\\mailwarehouse_asp.net_core\\mailwarehouse\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|c:\\users\\lenovo\\source\\repos\\vladyslavklimyuk\\mailwarehouse_asp.net_core\\mailwarehouse\\viewmodels\\packageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|solutionrelative:viewmodels\\packageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|c:\\users\\lenovo\\source\\repos\\vladyslavklimyuk\\mailwarehouse_asp.net_core\\mailwarehouse\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|c:\\users\\lenovo\\source\\repos\\vladyslavklimyuk\\mailwarehouse_asp.net_core\\mailwarehouse\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|c:\\users\\lenovo\\source\\repos\\vladyslavklimyuk\\mailwarehouse_asp.net_core\\mailwarehouse\\mailwarehouse.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|solutionrelative:mailwarehouse.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|c:\\users\\lenovo\\source\\repos\\vladyslavklimyuk\\mailwarehouse_asp.net_core\\mailwarehouse\\migrations\\20250307130638_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|solutionrelative:migrations\\20250307130638_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|c:\\users\\lenovo\\source\\repos\\vladyslavklimyuk\\mailwarehouse_asp.net_core\\mailwarehouse\\migrations\\postaldeliverydbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|solutionrelative:migrations\\postaldeliverydbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F58F0C56-FA93-4EEE-BCC4-54F240661A3C}|..\\MailWarehouse.Infrastructure\\MailWarehouse.Infrastructure.csproj|c:\\users\\lenovo\\source\\repos\\vladyslavklimyuk\\mailwarehouse_asp.net_core\\mailwarehouse.infrastructure\\postaldeliverydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|c:\\users\\lenovo\\source\\repos\\vladyslavklimyuk\\mailwarehouse_asp.net_core\\mailwarehouse\\controllers\\packagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{780C2493-F13A-4A32-92BB-6BD807C3D389}|MailWarehouse.csproj|solutionrelative:controllers\\packagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +49,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,16 +61,127 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-07T13:49:01.94Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PackageViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\ViewModels\\PackageViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\PackageViewModel.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\ViewModels\\PackageViewModel.cs",
+              "RelativeToolTip": "ViewModels\\PackageViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T13:48:53.565Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PostalDeliveryDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\Migrations\\PostalDeliveryDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "Migrations\\PostalDeliveryDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\Migrations\\PostalDeliveryDbContextModelSnapshot.cs",
+              "RelativeToolTip": "Migrations\\PostalDeliveryDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T13:07:40.375Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MailWarehouse.http",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\MailWarehouse.http",
+              "RelativeDocumentMoniker": "MailWarehouse.http",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\MailWarehouse.http",
+              "RelativeToolTip": "MailWarehouse.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-03-07T13:07:05.091Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "20250307130638_InitialCreate.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\Migrations\\20250307130638_InitialCreate.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250307130638_InitialCreate.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\Migrations\\20250307130638_InitialCreate.cs",
+              "RelativeToolTip": "Migrations\\20250307130638_InitialCreate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T13:06:39.525Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\Program.cs*",
               "RelativeToolTip": "Program.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-03T11:51:13.526Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-07T13:37:32.202Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAACKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-07T13:02:15.336Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PackageController.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\Controllers\\PackageController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PackageController.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse\\Controllers\\PackageController.cs",
+              "RelativeToolTip": "Controllers\\PackageController.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAgwEAAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T12:45:24.629Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PostalDeliveryDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse.Infrastructure\\PostalDeliveryDbContext.cs",
+              "RelativeDocumentMoniker": "..\\MailWarehouse.Infrastructure\\PostalDeliveryDbContext.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\VladyslavKlimyuk\\MailWarehouse_ASP.NET_Core\\MailWarehouse.Infrastructure\\PostalDeliveryDbContext.cs",
+              "RelativeToolTip": "..\\MailWarehouse.Infrastructure\\PostalDeliveryDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T12:44:47.07Z"
             }
           ]
         }

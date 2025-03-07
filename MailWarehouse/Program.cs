@@ -15,7 +15,9 @@ builder.Services.AddScoped<IPackageRepository, PackageRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPackageService, PackageService>();
 builder.Services.AddDbContext<PostalDeliveryDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        b => b.MigrationsAssembly("MailWarehouse").EnableRetryOnFailure()));
+
 
 builder.Services.AddControllers();
 builder.Services.AddControllersWithViews();
@@ -46,7 +48,7 @@ app.UseStaticFiles();
 
 app.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+        pattern: "{controller=Package}/{action=Index}/{id?}");
 
 app.MapControllers();
 
