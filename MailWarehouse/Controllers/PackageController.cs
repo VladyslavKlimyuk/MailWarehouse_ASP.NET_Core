@@ -27,7 +27,7 @@ public class PackageController : ControllerBase
         return Ok(_mapper.Map<IEnumerable<PackageViewModel>>(packages));
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public ActionResult<PackageViewModel> GetPackage(int id)
     {
         PackageDto package = _packageService.GetPackageById(id);
@@ -39,37 +39,43 @@ public class PackageController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<PackageViewModel> CreatePackage(PackageViewModel packageViewModel)
+    public ActionResult<PackageViewModel> CreatePackage([FromBody] PackageViewModel packageViewModel)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            PackageDto packageDto = _mapper.Map<PackageDto>(packageViewModel);
-            _packageService.CreatePackage(packageDto);
-            return CreatedAtAction(nameof(GetPackage), new { id = packageDto.Id }, _mapper.Map<PackageViewModel>(packageDto));
+            return BadRequest(ModelState);
         }
-        return BadRequest(ModelState);
+        PackageDto packageDto = _mapper.Map<PackageDto>(packageViewModel);
+        _packageService.CreatePackage(packageDto);
+        return CreatedAtAction(nameof(GetPackage), new { id = packageDto.Id }, _mapper.Map<PackageViewModel>(packageDto));
     }
 
-    [HttpPut("{id}")]
-    public IActionResult UpdatePackage(int id, PackageViewModel packageViewModel)
+    [HttpPut("{id:int}")]
+    public IActionResult UpdatePackage(int id, [FromBody] PackageViewModel packageViewModel)
     {
         if (id != packageViewModel.Id)
         {
             return BadRequest();
         }
 
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            PackageDto packageDto = _mapper.Map<PackageDto>(packageViewModel);
-            _packageService.UpdatePackage(packageDto);
-            return NoContent();
+            return BadRequest(ModelState);
         }
-        return BadRequest(ModelState);
+
+        PackageDto packageDto = _mapper.Map<PackageDto>(packageViewModel);
+        _packageService.UpdatePackage(packageDto);
+        return NoContent();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public IActionResult DeletePackage(int id)
     {
+        PackageDto package = _packageService.GetPackageById(id);
+        if (package == null)
+        {
+            return NotFound();
+        }
         _packageService.DeletePackage(id);
         return NoContent();
     }
