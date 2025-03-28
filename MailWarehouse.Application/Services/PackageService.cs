@@ -3,6 +3,7 @@ using MailWarehouse.Application.Models;
 using MailWarehouse.Application.Interfaces;
 using MailWarehouse.Domain.Entities;
 using MailWarehouse.Domain.Interfaces;
+using MailWarehouse.Infrastructure.Repositories;
 
 namespace MailWarehouse.Application.Services;
 
@@ -17,32 +18,33 @@ public class PackageService : IPackageService
         _mapper = mapper;
     }
 
-    public IEnumerable<PackageDto> GetAllPackages()
+    public async Task<IEnumerable<PackageDto>> GetAllPackagesAsync()
     {
-        var packages = _packageRepository.GetAll();
+        var packages = await Task.Run(() => _packageRepository.GetAll());
         return _mapper.Map<IEnumerable<PackageDto>>(packages);
     }
 
-    public PackageDto GetPackageById(int id)
+    public async Task<PackageDto> GetPackageByIdAsync(int id)
     {
-        var package = _packageRepository.GetById(id);
+        var package = await Task.Run(() => _packageRepository.GetById(id));
         return _mapper.Map<PackageDto>(package);
     }
 
-    public void CreatePackage(PackageDto packageDto)
+    public async Task CreatePackageAsync(PackageDto packageDto)
     {
         var package = _mapper.Map<Package>(packageDto);
-        _packageRepository.Add(package);
+        await Task.Run(() => _packageRepository.Add(package));
     }
 
-    public void UpdatePackage(PackageDto packageDto)
+    public async Task UpdatePackageAsync(PackageDto packageDto)
     {
         var package = _mapper.Map<Package>(packageDto);
-        _packageRepository.Update(package);
+        await Task.Run(() => _packageRepository.Update(package));
     }
 
-    public void DeletePackage(int id)
+    public async Task DeletePackageAsync(int id)
     {
-        _packageRepository.Delete(id);
+        await Task.Run(() => _packageRepository.Delete(id));
     }
 }
+

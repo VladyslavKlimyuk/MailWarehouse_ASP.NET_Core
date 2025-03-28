@@ -3,13 +3,13 @@ using MailWarehouse.Application.Interfaces;
 using MailWarehouse.Application.Models;
 using MailWarehouse.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MailWarehouse.Presentation.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class PackageController : ControllerBase
+public class PackageController : Controller
 {
     private readonly IPackageService _packageService;
     private readonly IMapper _mapper;
@@ -21,62 +21,146 @@ public class PackageController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<PackageViewModel>> GetPackages()
+    public IActionResult Create()
     {
-        IEnumerable<PackageDto> packages = _packageService.GetAllPackages();
-        return Ok(_mapper.Map<IEnumerable<PackageViewModel>>(packages));
+        return View();
     }
 
-    [HttpGet("{id:int}")]
-    public ActionResult<PackageViewModel> GetPackage(int id)
+    [HttpGet]
+    public async Task<IActionResult> Index()
     {
-        PackageDto package = _packageService.GetPackageById(id);
-        if (package == null)
+        try
         {
-            return NotFound();
+            IEnumerable<PackageDto> packages = await _packageService.GetAllPackagesAsync();
+            var packageViewModels = _mapper.Map<IEnumerable<PackageViewModel>>(packages);
+            return View(packageViewModels);
         }
-        return Ok(_mapper.Map<PackageViewModel>(package));
+        catch (Exception ex)
+        {
+            // Передача помилки до представлення
+            TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+            return View(new List<PackageViewModel>()); // Повернення порожнього списку або іншого представлення
+        }
+    }
+
+    [HttpGet("Details/{id:int}")]
+    public async Task<IActionResult> Details(int id)
+    {
+        try
+        {
+            PackageDto package = await _packageService.GetPackageByIdAsync(id);
+            if (package == null)
+            {
+                return NotFound();
+            }
+            var packageViewModel = _mapper.Map<PackageViewModel>(package);
+            return View(packageViewModel);
+        }
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+            return RedirectToAction(nameof(Index));
+        }
     }
 
     [HttpPost]
-    public ActionResult<PackageViewModel> CreatePackage([FromBody] PackageViewModel packageViewModel)
+    public async Task<IActionResult> CreatePackage(PackageViewModel packageViewModel)
     {
-        if (!ModelState.IsValid)
+        try
         {
-            return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+            {
+                return View(packageViewModel);
+            }
+            PackageDto packageDto = _mapper.Map<PackageDto>(packageViewModel);
+            await _packageService.CreatePackageAsync(packageDto);
+            return RedirectToAction(nameof(Index));
         }
-        PackageDto packageDto = _mapper.Map<PackageDto>(packageViewModel);
-        _packageService.CreatePackage(packageDto);
-        return CreatedAtAction(nameof(GetPackage), new { id = packageDto.Id }, _mapper.Map<PackageViewModel>(packageDto));
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+            return View(packageViewModel);
+        }
     }
 
-    [HttpPut("{id:int}")]
-    public IActionResult UpdatePackage(int id, [FromBody] PackageViewModel packageViewModel)
+    [HttpGet("Edit/{id:int}")]
+    public async Task<IActionResult> Edit(int id)
     {
-        if (id != packageViewModel.Id)
+        try
         {
-            return BadRequest();
+            PackageDto package = await _packageService.GetPackageByIdAsync(id);
+            if (package == null)
+            {
+                return NotFound();
+            }
+            var packageViewModel = _mapper.Map<PackageViewModel>(package);
+            return View(packageViewModel);
         }
-
-        if (!ModelState.IsValid)
+        catch (Exception ex)
         {
-            return BadRequest(ModelState);
+            TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+            return RedirectToAction(nameof(Index));
         }
-
-        PackageDto packageDto = _mapper.Map<PackageDto>(packageViewModel);
-        _packageService.UpdatePackage(packageDto);
-        return NoContent();
     }
 
-    [HttpDelete("{id:int}")]
-    public IActionResult DeletePackage(int id)
+    [HttpPost("Edit/{id:int}")]
+    public async Task<IActionResult> EditPackage(int id, PackageViewModel packageViewModel)
     {
-        PackageDto package = _packageService.GetPackageById(id);
-        if (package == null)
+        try
         {
-            return NotFound();
+            if (id != packageViewModel.Id)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(packageViewModel);
+            }
+
+            PackageDto packageDto = _mapper.Map<PackageDto>(packageViewModel);
+            await _packageService.UpdatePackageAsync(packageDto);
+            return RedirectToAction(nameof(Index));
         }
-        _packageService.DeletePackage(id);
-        return NoContent();
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+            return View(packageViewModel);
+        }
+    }
+
+    [HttpGet("Delete/{id:int}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            PackageDto package = await _packageService.GetPackageByIdAsync(id);
+            if (package == null)
+            {
+                return NotFound();
+            }
+            var packageViewModel = _mapper.Map<PackageViewModel>(package);
+            return View(packageViewModel);
+        }
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+            return RedirectToAction(nameof(Index));
+        }
+    }
+
+    [HttpPost("Delete/{id:int}")]
+    public async Task<IActionResult> DeletePackage(int id)
+    {
+        try
+        {
+            await _packageService.DeletePackageAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

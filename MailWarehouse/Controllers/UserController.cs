@@ -4,13 +4,10 @@ using MailWarehouse.Application.Interfaces;
 using MailWarehouse.Application.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using MailWarehouse.Domain.Entities;
 
 namespace MailWarehouse.Presentation.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class UserController : ControllerBase
+public class UserController : Controller
 {
     private readonly IUserService _userService;
     private readonly IMapper _mapper;
@@ -21,38 +18,56 @@ public class UserController : ControllerBase
         _mapper = mapper;
     }
 
-    [HttpGet]
-    public ActionResult<IEnumerable<UserViewModel>> GetAllUsers()
+    public IActionResult Index()
     {
         IEnumerable<UserDto> users = _userService.GetAllUsers();
-        return Ok(_mapper.Map<IEnumerable<UserViewModel>>(users));
+        var userViewModels = _mapper.Map<IEnumerable<UserViewModel>>(users);
+        return View(userViewModels);
     }
 
-    [HttpGet("{id:int}")]
-    public ActionResult<UserViewModel> GetUserById(int id)
+    public IActionResult Details(int id)
     {
         UserDto user = _userService.GetUserById(id);
         if (user == null)
         {
             return NotFound();
         }
-        return Ok(_mapper.Map<UserViewModel>(user));
+        var userViewModel = _mapper.Map<UserViewModel>(user);
+        return View(userViewModel);
+    }
+
+    [HttpGet]
+    public IActionResult Create()
+    {
+        return View();
     }
 
     [HttpPost]
-    public ActionResult<UserViewModel> CreateUser([FromBody] UserViewModel userViewModel)
+    public IActionResult CreateUser(UserViewModel userViewModel)
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            return View(userViewModel);
         }
         UserDto userDto = _mapper.Map<UserDto>(userViewModel);
         _userService.CreateUser(userDto);
-        return CreatedAtAction(nameof(GetUserById), new { id = userDto.Id }, userViewModel);
+        return RedirectToAction(nameof(Index));
     }
 
-    [HttpPut("{id:int}")]
-    public IActionResult UpdateUser(int id, [FromBody] UserViewModel userViewModel)
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        UserDto user = _userService.GetUserById(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        var userViewModel = _mapper.Map<UserViewModel>(user);
+        return View(userViewModel);
+    }
+
+    [HttpPost]
+    public IActionResult EditUser(int id, UserViewModel userViewModel)
     {
         if (id != userViewModel.Id)
         {
@@ -61,23 +76,30 @@ public class UserController : ControllerBase
 
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            return View(userViewModel);
         }
 
         UserDto userDto = _mapper.Map<UserDto>(userViewModel);
         _userService.UpdateUser(userDto);
-        return NoContent();
+        return RedirectToAction(nameof(Index));
     }
 
-    [HttpDelete("{id:int}")]
-    public IActionResult DeleteUser(int id)
+    [HttpGet]
+    public IActionResult Delete(int id)
     {
         UserDto user = _userService.GetUserById(id);
         if (user == null)
         {
             return NotFound();
         }
+        var userViewModel = _mapper.Map<UserViewModel>(user);
+        return View(userViewModel);
+    }
+
+    [HttpPost]
+    public IActionResult DeleteUser(int id)
+    {
         _userService.DeleteUser(id);
-        return NoContent();
+        return RedirectToAction(nameof(Index));
     }
 }
