@@ -1,6 +1,4 @@
-﻿using MailWarehouse.Domain.Enums;
-
-namespace MailWarehouse.Application.Models;
+﻿namespace MailWarehouse.Application.Models;
 
 public class PackageDto
 {
@@ -12,7 +10,7 @@ public class PackageDto
     public string RecipientAddress { get; set; }
     public decimal Weight { get; set; }
     public decimal Price { get; set; }
-    public PackageStatus Status { get; set; }
+    public int Status { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? DeliveredAt { get; set; }
 }

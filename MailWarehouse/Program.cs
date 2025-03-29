@@ -1,11 +1,12 @@
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using MailWarehouse.Domain.Interfaces;
-using MailWarehouse.Infrastructure;
-using MailWarehouse.Infrastructure.Repositories;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 using MailWarehouse.Application.Interfaces;
 using MailWarehouse.Application.Services;
+using MailWarehouse.Application.Validators;
+using MailWarehouse.Domain.Interfaces;
+using MailWarehouse.Infrastructure.Repositories;
+using MailWarehouse.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,12 +15,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IPackageRepository, PackageRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPackageService, PackageService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddDbContext<PostalDeliveryDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
         b => b.MigrationsAssembly("MailWarehouse").EnableRetryOnFailure()));
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssemblyContaining<PackageValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
 
-
-builder.Services.AddControllers();
 builder.Services.AddControllersWithViews();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -34,21 +37,25 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
-    app.UseSwagger();
-    app.UseSwaggerUI();
 }
 
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    c.RoutePrefix = string.Empty;
+});
+
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
 
-app.UseStaticFiles();
-
 app.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Package}/{action=Index}/{id?}");
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllers();
 

@@ -21,7 +21,8 @@ public class UserController : Controller
     public IActionResult Index()
     {
         IEnumerable<UserDto> users = _userService.GetAllUsers();
-        return View(_mapper.Map<IEnumerable<UserViewModel>>(users));
+        var userViewModels = _mapper.Map<IEnumerable<UserViewModel>>(users);
+        return View(userViewModels);
     }
 
     public IActionResult Details(int id)
@@ -31,27 +32,29 @@ public class UserController : Controller
         {
             return NotFound();
         }
-        return View(_mapper.Map<UserViewModel>(user));
+        var userViewModel = _mapper.Map<UserViewModel>(user);
+        return View(userViewModel);
     }
 
+    [HttpGet]
     public IActionResult Create()
     {
         return View();
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Create(UserViewModel userViewModel)
+    public IActionResult CreateUser(UserViewModel userViewModel)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            UserDto userDto = _mapper.Map<UserDto>(userViewModel);
-            _userService.CreateUser(userDto);
-            return RedirectToAction(nameof(Index));
+            return View(userViewModel);
         }
-        return View(userViewModel);
+        UserDto userDto = _mapper.Map<UserDto>(userViewModel);
+        _userService.CreateUser(userDto);
+        return RedirectToAction(nameof(Index));
     }
 
+    [HttpGet]
     public IActionResult Edit(int id)
     {
         UserDto user = _userService.GetUserById(id);
@@ -59,27 +62,29 @@ public class UserController : Controller
         {
             return NotFound();
         }
-        return View(_mapper.Map<UserViewModel>(user));
+        var userViewModel = _mapper.Map<UserViewModel>(user);
+        return View(userViewModel);
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Edit(int id, UserViewModel userViewModel)
+    public IActionResult EditUser(int id, UserViewModel userViewModel)
     {
         if (id != userViewModel.Id)
         {
             return BadRequest();
         }
 
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            UserDto userDto = _mapper.Map<UserDto>(userViewModel);
-            _userService.UpdateUser(userDto);
-            return RedirectToAction(nameof(Index));
+            return View(userViewModel);
         }
-        return View(userViewModel);
+
+        UserDto userDto = _mapper.Map<UserDto>(userViewModel);
+        _userService.UpdateUser(userDto);
+        return RedirectToAction(nameof(Index));
     }
 
+    [HttpGet]
     public IActionResult Delete(int id)
     {
         UserDto user = _userService.GetUserById(id);
@@ -87,12 +92,12 @@ public class UserController : Controller
         {
             return NotFound();
         }
-        return View(_mapper.Map<UserViewModel>(user));
+        var userViewModel = _mapper.Map<UserViewModel>(user);
+        return View(userViewModel);
     }
 
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public IActionResult DeleteConfirmed(int id)
+    [HttpPost]
+    public IActionResult DeleteUser(int id)
     {
         _userService.DeleteUser(id);
         return RedirectToAction(nameof(Index));

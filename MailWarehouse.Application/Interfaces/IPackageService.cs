@@ -5,9 +5,9 @@ namespace MailWarehouse.Application.Interfaces;
 
 public interface IPackageService
 {
-    IEnumerable<PackageDto> GetAllPackages();
-    PackageDto GetPackageById(int id);
-    void CreatePackage(PackageDto packageDto);
-    void UpdatePackage(PackageDto packageDto);
-    void DeletePackage(int id);
+    Task<IEnumerable<PackageDto>> GetAllPackagesAsync();
+    Task<PackageDto> GetPackageByIdAsync(int id);
+    Task CreatePackageAsync(PackageDto packageDto);
+    Task UpdatePackageAsync(PackageDto packageDto);
+    Task DeletePackageAsync(int id);
 }
