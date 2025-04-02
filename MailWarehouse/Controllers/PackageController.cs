@@ -3,26 +3,27 @@ using MailWarehouse.Application.Interfaces;
 using MailWarehouse.Application.Models;
 using MailWarehouse.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
 
-namespace MailWarehouse.Presentation.Controllers;
+namespace MailWarehouse.Controllers;
 
 public class PackageController : Controller
 {
     private readonly IPackageService _packageService;
     private readonly IMapper _mapper;
+    private readonly IStringLocalizer<PackageController> _localizer;
 
-    public PackageController(IPackageService packageService, IMapper mapper)
+    public PackageController(IPackageService packageService, IMapper mapper, IStringLocalizer<PackageController> localizer)
     {
         _packageService = packageService;
         _mapper = mapper;
+        _localizer = localizer;
     }
 
     [HttpGet]
     public IActionResult Create()
     {
+        ViewData["Title"] = _localizer["CreateTitle"];
         return View();
     }
 
@@ -31,15 +32,15 @@ public class PackageController : Controller
     {
         try
         {
+            ViewData["Title"] = _localizer["IndexTitle"];
             IEnumerable<PackageDto> packages = await _packageService.GetAllPackagesAsync();
             var packageViewModels = _mapper.Map<IEnumerable<PackageViewModel>>(packages);
             return View(packageViewModels);
         }
         catch (Exception ex)
         {
-            // Передача помилки до представлення
-            TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
-            return View(new List<PackageViewModel>()); // Повернення порожнього списку або іншого представлення
+            TempData["ErrorMessage"] = _localizer["ErrorMessage", ex.Message];
+            return View(new List<PackageViewModel>());
         }
     }
 
@@ -48,6 +49,7 @@ public class PackageController : Controller
     {
         try
         {
+            ViewData["Title"] = _localizer["DetailsTitle"];
             PackageDto package = await _packageService.GetPackageByIdAsync(id);
             if (package == null)
             {
@@ -58,7 +60,7 @@ public class PackageController : Controller
         }
         catch (Exception ex)
         {
-            TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+            TempData["ErrorMessage"] = _localizer["ErrorMessage", ex.Message];
             return RedirectToAction(nameof(Index));
         }
     }
@@ -74,11 +76,12 @@ public class PackageController : Controller
             }
             PackageDto packageDto = _mapper.Map<PackageDto>(packageViewModel);
             await _packageService.CreatePackageAsync(packageDto);
+            TempData["SuccessMessage"] = _localizer["CreateSuccess"];
             return RedirectToAction(nameof(Index));
         }
         catch (Exception ex)
         {
-            TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+            TempData["ErrorMessage"] = _localizer["ErrorMessage", ex.Message];
             return View(packageViewModel);
         }
     }
@@ -88,6 +91,7 @@ public class PackageController : Controller
     {
         try
         {
+            ViewData["Title"] = _localizer["EditTitle"];
             PackageDto package = await _packageService.GetPackageByIdAsync(id);
             if (package == null)
             {
@@ -98,7 +102,7 @@ public class PackageController : Controller
         }
         catch (Exception ex)
         {
-            TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+            TempData["ErrorMessage"] = _localizer["ErrorMessage", ex.Message];
             return RedirectToAction(nameof(Index));
         }
     }
@@ -120,11 +124,12 @@ public class PackageController : Controller
 
             PackageDto packageDto = _mapper.Map<PackageDto>(packageViewModel);
             await _packageService.UpdatePackageAsync(packageDto);
+            TempData["SuccessMessage"] = _localizer["UpdateSuccess"];
             return RedirectToAction(nameof(Index));
         }
         catch (Exception ex)
         {
-            TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+            TempData["ErrorMessage"] = _localizer["ErrorMessage", ex.Message];
             return View(packageViewModel);
         }
     }
@@ -134,6 +139,7 @@ public class PackageController : Controller
     {
         try
         {
+            ViewData["Title"] = _localizer["DeleteTitle"];
             PackageDto package = await _packageService.GetPackageByIdAsync(id);
             if (package == null)
             {
@@ -144,7 +150,7 @@ public class PackageController : Controller
         }
         catch (Exception ex)
         {
-            TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+            TempData["ErrorMessage"] = _localizer["ErrorMessage", ex.Message];
             return RedirectToAction(nameof(Index));
         }
     }
@@ -155,11 +161,12 @@ public class PackageController : Controller
         try
         {
             await _packageService.DeletePackageAsync(id);
+            TempData["SuccessMessage"] = _localizer["DeleteSuccess"];
             return RedirectToAction(nameof(Index));
         }
         catch (Exception ex)
         {
-            TempData["ErrorMessage"] = $"Internal server error: {ex.Message}";
+            TempData["ErrorMessage"] = _localizer["ErrorMessage", ex.Message];
             return RedirectToAction(nameof(Index));
         }
     }
