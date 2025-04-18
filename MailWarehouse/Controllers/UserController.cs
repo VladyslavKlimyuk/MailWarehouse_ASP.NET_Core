@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using MailWarehouse.ViewModels;
 using MailWarehouse.Application.Interfaces;
 using MailWarehouse.Application.Models;
+using MailWarehouse.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using System.Collections.Generic;
 
 namespace MailWarehouse.Controllers;
 
@@ -21,96 +20,164 @@ public class UserController : Controller
         _localizer = localizer;
     }
 
+    // GET: User/Index
     public IActionResult Index()
     {
         ViewData["Title"] = _localizer["UserIndexTitle"];
-        IEnumerable<UserDto> users = _userService.GetAllUsers();
-        var userViewModels = _mapper.Map<IEnumerable<UserViewModel>>(users);
-        return View(userViewModels);
+        try
+        {
+            IEnumerable<UserDto> users = _userService.GetAllUsers();
+            var userViewModels = _mapper.Map<IEnumerable<UserViewModel>>(users);
+            return View("Index", userViewModels);
+        }
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = _localizer["ErrorMessage", ex.Message];
+            return View("Index", new List<UserViewModel>());
+        }
     }
 
+    // GET: User/Details/5
+    [HttpGet("Details/{id:int}")]
     public IActionResult Details(int id)
     {
         ViewData["Title"] = _localizer["UserDetailsTitle"];
-        UserDto user = _userService.GetUserById(id);
-        if (user == null)
+        try
         {
-            return NotFound();
+            UserDto user = _userService.GetUserById(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var userViewModel = _mapper.Map<UserViewModel>(user);
+            return View("Details", userViewModel);
         }
-        var userViewModel = _mapper.Map<UserViewModel>(user);
-        return View(userViewModel);
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = _localizer["ErrorMessage", ex.Message];
+            return RedirectToAction(nameof(Index));
+        }
     }
 
+    // GET: User/Create
     [HttpGet]
     public IActionResult Create()
     {
         ViewData["Title"] = _localizer["UserCreateTitle"];
-        return View();
+        return View("Create");
     }
 
+    // POST: User/Create
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult CreateUser(UserViewModel userViewModel)
     {
-        if (!ModelState.IsValid)
+        try
         {
-            return View(userViewModel);
+            if (!ModelState.IsValid)
+            {
+                return View("Create", userViewModel);
+            }
+            UserDto userDto = _mapper.Map<UserDto>(userViewModel);
+            _userService.CreateUser(userDto);
+            TempData["SuccessMessage"] = _localizer["UserCreateSuccess"];
+            return RedirectToAction(nameof(Index));
         }
-        UserDto userDto = _mapper.Map<UserDto>(userViewModel);
-        _userService.CreateUser(userDto);
-        TempData["SuccessMessage"] = _localizer["UserCreateSuccess"];
-        return RedirectToAction(nameof(Index));
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = _localizer["ErrorMessage", ex.Message];
+            return View("Create", userViewModel);
+        }
     }
 
-    [HttpGet]
+    // GET: User/Edit/5
+    [HttpGet("Edit/{id:int}")]
     public IActionResult Edit(int id)
     {
         ViewData["Title"] = _localizer["UserEditTitle"];
-        UserDto user = _userService.GetUserById(id);
-        if (user == null)
+        try
         {
-            return NotFound();
+            UserDto user = _userService.GetUserById(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var userViewModel = _mapper.Map<UserViewModel>(user);
+            return View("Edit", userViewModel);
         }
-        var userViewModel = _mapper.Map<UserViewModel>(user);
-        return View(userViewModel);
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = _localizer["ErrorMessage", ex.Message];
+            return RedirectToAction(nameof(Index));
+        }
     }
 
-    [HttpPost]
+    // POST: User/Edit/5
+    [HttpPost("Edit/{id:int}")]
+    [ValidateAntiForgeryToken]
     public IActionResult EditUser(int id, UserViewModel userViewModel)
     {
-        if (id != userViewModel.Id)
+        try
         {
-            return BadRequest();
-        }
+            if (id != userViewModel.Id)
+            {
+                return BadRequest();
+            }
 
-        if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", userViewModel);
+            }
+
+            UserDto userDto = _mapper.Map<UserDto>(userViewModel);
+            _userService.UpdateUser(userDto);
+            TempData["SuccessMessage"] = _localizer["UserUpdateSuccess"]; // Assuming you have this key
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception ex)
         {
-            return View(userViewModel);
+            TempData["ErrorMessage"] = _localizer["ErrorMessage", ex.Message];
+            return View("Edit", userViewModel);
         }
-
-        UserDto userDto = _mapper.Map<UserDto>(userViewModel);
-        _userService.UpdateUser(userDto);
-        TempData["SuccessMessage"] = _localizer["UserUpdateSuccess"];
-        return RedirectToAction(nameof(Index));
     }
 
-    [HttpGet]
+    // GET: User/Delete/5
+    [HttpGet("Delete/{id:int}")]
     public IActionResult Delete(int id)
     {
         ViewData["Title"] = _localizer["UserDeleteTitle"];
-        UserDto user = _userService.GetUserById(id);
-        if (user == null)
+        try
         {
-            return NotFound();
+            UserDto user = _userService.GetUserById(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var userViewModel = _mapper.Map<UserViewModel>(user);
+            return View("Delete", userViewModel);
         }
-        var userViewModel = _mapper.Map<UserViewModel>(user);
-        return View(userViewModel);
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = _localizer["ErrorMessage", ex.Message];
+            return RedirectToAction(nameof(Index));
+        }
     }
 
-    [HttpPost]
-    public IActionResult DeleteUser(int id)
+    // POST: User/Delete/5
+    [HttpPost("Delete/{id:int}")]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteUserConfirmed(int id)
     {
-        _userService.DeleteUser(id);
-        TempData["SuccessMessage"] = _localizer["UserDeleteSuccess"];
-        return RedirectToAction(nameof(Index));
+        try
+        {
+            _userService.DeleteUser(id);
+            TempData["SuccessMessage"] = _localizer["UserDeleteSuccess"];
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = _localizer["ErrorMessage", ex.Message];
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

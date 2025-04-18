@@ -1,0 +1,60 @@
+﻿@model MailWarehouse.ViewModels.UserViewModel
+@using Microsoft.AspNetCore.Mvc
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["UserEditTitle"];
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>@Localizer["UserViewModel"]</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Localizer["FirstName"]
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Localizer["LastName"]
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Localizer["Email"]
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="@(Html.Raw("form-group"))">
+            @Html.LabelFor(model => model.FirstName, new { @class = "control-label" })
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="@(Html.Raw("form-group"))">
+            @Html.LabelFor(model => model.LastName, new { @class = "control-label" })
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="@(Html.Raw("form-group"))">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label" })
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <input type="submit" value="@Localizer["Save"]" class="btn btn-primary" /> |
+        <a asp-action="Index">@Localizer["BackToList"]</a>
+    </form>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,83 +1,72 @@
 ﻿@model MailWarehouse.ViewModels.PackageViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = "Package Page";
+    ViewData["Title"] = Localizer["PackageCreateTitle"];
 }
 
-<div class="text-center">
-    <h1 class="display-4">Add item</h1>
-</div>
+<h1>@ViewData["Title"]</h1>
 
-<h2>Створити посилку</h2>
-
-<form asp-action="CreatePackage" method="post" asp-controller="Package">
+<form asp-action="Create" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
     <div class="form-group">
         <label asp-for="TrackingNumber" class="control-label"></label>
         <input asp-for="TrackingNumber" class="form-control" />
         <span asp-validation-for="TrackingNumber" class="text-danger"></span>
     </div>
-
     <div class="form-group">
         <label asp-for="SenderId" class="control-label"></label>
         <input asp-for="SenderId" class="form-control" />
         <span asp-validation-for="SenderId" class="text-danger"></span>
     </div>
-
     <div class="form-group">
         <label asp-for="RecipientId" class="control-label"></label>
         <input asp-for="RecipientId" class="form-control" />
+        <span asp-validation-for="RecipientId" class="form-control" />
         <span asp-validation-for="RecipientId" class="text-danger"></span>
     </div>
-
     <div class="form-group">
         <label asp-for="SenderAddress" class="control-label"></label>
         <input asp-for="SenderAddress" class="form-control" />
         <span asp-validation-for="SenderAddress" class="text-danger"></span>
     </div>
-
     <div class="form-group">
         <label asp-for="RecipientAddress" class="control-label"></label>
         <input asp-for="RecipientAddress" class="form-control" />
         <span asp-validation-for="RecipientAddress" class="text-danger"></span>
     </div>
-
     <div class="form-group">
         <label asp-for="Weight" class="control-label"></label>
         <input asp-for="Weight" class="form-control" />
         <span asp-validation-for="Weight" class="text-danger"></span>
     </div>
-
     <div class="form-group">
         <label asp-for="Price" class="control-label"></label>
         <input asp-for="Price" class="form-control" />
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
-
     <div class="form-group">
         <label asp-for="Status" class="control-label"></label>
         <select asp-for="Status" asp-items="Html.GetEnumSelectList<MailWarehouse.Domain.Enums.PackageStatus>()" class="form-control"></select>
         <span asp-validation-for="Status" class="text-danger"></span>
     </div>
-
     <div class="form-group">
         <label asp-for="CreatedAt" class="control-label"></label>
         <input asp-for="CreatedAt" type="datetime-local" class="form-control" />
         <span asp-validation-for="CreatedAt" class="text-danger"></span>
     </div>
-
     <div class="form-group">
         <label asp-for="DeliveredAt" class="control-label"></label>
         <input asp-for="DeliveredAt" type="datetime-local" class="form-control" />
         <span asp-validation-for="DeliveredAt" class="text-danger"></span>
     </div>
-
-    <div class="form-group">
-        <input type="submit" value="Створити" class="btn btn-primary" />
-    </div>
+    <button type="submit" class="btn btn-primary">@Localizer["Create"]</button>
 </form>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

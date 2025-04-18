@@ -1,0 +1,62 @@
+﻿@model IEnumerable<MailWarehouse.ViewModels.PackageViewModel>
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["IndexTitle"];
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">@Localizer["CreateNew"]</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Localizer["TrackingNumber"]</th>
+            <th>@Localizer["SenderId"]</th>
+            <th>@Localizer["RecipientId"]</th>
+            <th>@Localizer["SenderAddress"]</th>
+            <th>@Localizer["RecipientAddress"]</th>
+            <th>@Localizer["Weight"]</th>
+            <th>@Localizer["Price"]</th>
+            <th>@Localizer["Status"]</th>
+            <th>@Localizer["CreatedAt"]</th>
+            <th>@Localizer["DeliveredAt"]</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.TrackingNumber</td>
+                    <td>@item.SenderId</td>
+                    <td>@item.RecipientId</td>
+                    <td>@item.SenderAddress</td>
+                    <td>@item.RecipientAddress</td>
+                    <td>@item.Weight</td>
+                    <td>@item.Price</td>
+                    <td>@Localizer[item.Status.ToString()]</td>
+                    <td>@item.CreatedAt</td>
+                    <td>@item.DeliveredAt</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["Edit"]</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">@Localizer["Details"]</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["Delete"]</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="10">@Localizer["NoPackages"]</td>
+            </tr>
+        }
+    </tbody>
+</table>
