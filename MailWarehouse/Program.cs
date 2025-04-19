@@ -37,17 +37,24 @@ builder.Services.AddControllersWithViews()
         {
             if (type.Namespace?.StartsWith("MailWarehouse.ViewModels") == true)
             {
-                return factory.Create(type.Name, typeof(MailWarehouse.Resources.SharedResource).Assembly.GetName().Name);
+                return factory.Create(type.Name, typeof(MailWarehouse.Resources.UserViewModelResource).Assembly.GetName().Name);
             }
-            else if (type.Namespace?.StartsWith("MailWarehouse.Controllers") == true)
+            else if (type.Namespace?.StartsWith("MailWarehouse.Controllers") == true && type.Name.Contains("PackageController"))
             {
-                return factory.Create(type.Name.Replace("Controller", ""), typeof(MailWarehouse.Resources.SharedResource).Assembly.GetName().Name);
+                return factory.Create(type.Name.Replace("Controller", ""), typeof(MailWarehouse.Resources.PackageControllerResource).Assembly.GetName().Name);
+            }
+            else if (type.Namespace?.StartsWith("MailWarehouse.Controllers") == true && type.Name.Contains("User"))
+            {
+                return factory.Create(type.Name.Replace("Controller", ""), typeof(MailWarehouse.Resources.UserControllerResource).Assembly.GetName().Name);
             }
             else if (type.FullName == "MailWarehouse.Resources.SharedResource")
             {
                 return factory.Create(type.Name, type.Assembly.GetName().Name);
             }
-            // Верните локализатор по умолчанию для остальных типов
+            else if (type.FullName == "MailWarehouse.Resources.HomeControllerResource")
+            {
+                return factory.Create(type.Name, type.Assembly.GetName().Name);
+            }
             return factory.Create(type);
         });
 

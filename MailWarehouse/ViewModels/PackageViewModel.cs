@@ -5,6 +5,7 @@ namespace MailWarehouse.ViewModels;
 
 public class PackageViewModel
 {
+    public PackageViewModel() { }
     public int Id { get; }
 
     [Display(Name = "TrackingNumber", ResourceType = typeof(PackageViewModelResource))]

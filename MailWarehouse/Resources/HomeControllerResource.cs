@@ -2,5 +2,6 @@
 
 public class HomeControllerResource
 {
-    // Цей клас використовується для локалізації ресурсів
+    public static string IndexTitle { get; } = "Головна сторінка";
+    public static string PrivacyText { get; } = "Політика конфіденційності";
 }

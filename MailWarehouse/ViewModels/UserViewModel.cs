@@ -5,6 +5,7 @@ namespace MailWarehouse.ViewModels;
 
 public class UserViewModel
 {
+    public UserViewModel() { }
     public int Id { get; set; }
 
     [Display(Name = "FirstName", ResourceType = typeof(UserViewModelResource))]

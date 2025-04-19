@@ -153,6 +153,9 @@
   <data name="StringLengthError" xml:space="preserve">
     <value>The field cannot exceed 50 characters</value>
   </data>
+  <data name="UserCreateTitle" xml:space="preserve">
+    <value>User Create</value>
+  </data>
   <data name="UserDeleteTitle" xml:space="preserve">
     <value>Delete User</value>
   </data>

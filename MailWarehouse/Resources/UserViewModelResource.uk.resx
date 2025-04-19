@@ -153,6 +153,9 @@
   <data name="StringLengthError" xml:space="preserve">
     <value>Поле не може перевищувати розмір у 50 символів</value>
   </data>
+  <data name="UserCreateTitle" xml:space="preserve">
+    <value>Створення користувача</value>
+  </data>
   <data name="UserDeleteTitle" xml:space="preserve">
     <value>Видалення користувача</value>
   </data>
