@@ -37,7 +37,7 @@ namespace MailWarehouse.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<string>("RecipientAddress")
                         .IsRequired()
@@ -61,7 +61,7 @@ namespace MailWarehouse.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Weight")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("Id");
 
@@ -86,11 +86,13 @@ namespace MailWarehouse.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -106,13 +108,13 @@ namespace MailWarehouse.Migrations
                     b.HasOne("MailWarehouse.Domain.Entities.User", "Recipient")
                         .WithMany("ReceivedPackages")
                         .HasForeignKey("RecipientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("MailWarehouse.Domain.Entities.User", "Sender")
                         .WithMany("SentPackages")
                         .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Recipient");

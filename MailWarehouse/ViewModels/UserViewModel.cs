@@ -1,30 +1,32 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using MailWarehouse.Resources;
 
 namespace MailWarehouse.ViewModels;
 
 public class UserViewModel
 {
-    public int Id { get; }
+    public UserViewModel() { }
+    public int Id { get; set; }
 
-    [Display(Name = "Ім'я")]
-    [Required(ErrorMessage = "Ім'я обов'язкове для заповнення.")]
-    [StringLength(50, ErrorMessage = "Ім'я не може бути довшим за 50 символів.")]
-    public string FirstName { get; }
+    [Display(Name = "FirstName", ResourceType = typeof(UserViewModelResource))]
+    [Required(ErrorMessageResourceName = "RequiredError", ErrorMessageResourceType = typeof(UserViewModelResource))]
+    [StringLength(50, ErrorMessageResourceName = "StringLengthError", ErrorMessageResourceType = typeof(UserViewModelResource))]
+    public string FirstName { get; set; }
 
-    [Display(Name = "Прізвище")]
-    [Required(ErrorMessage = "Прізвище обов'язкове для заповнення.")]
-    [StringLength(50, ErrorMessage = "Прізвище не може бути довшим за 50 символів.")]
-    public string LastName { get; }
+    [Display(Name = "LastName", ResourceType = typeof(UserViewModelResource))]
+    [Required(ErrorMessageResourceName = "RequiredError", ErrorMessageResourceType = typeof(UserViewModelResource))]
+    [StringLength(50, ErrorMessageResourceName = "StringLengthError", ErrorMessageResourceType = typeof(UserViewModelResource))]
+    public string LastName { get; set; }
 
-    [Display(Name = "Email")]
-    [Required(ErrorMessage = "Email обов'язковий для заповнення.")]
-    [EmailAddress(ErrorMessage = "Некоректний формат email.")]
-    public string Email { get; }
+    [Display(Name = "Email", ResourceType = typeof(UserViewModelResource))]
+    [Required(ErrorMessageResourceName = "RequiredError", ErrorMessageResourceType = typeof(UserViewModelResource))]
+    [EmailAddress(ErrorMessageResourceName = "EmailAddressError", ErrorMessageResourceType = typeof(UserViewModelResource))]
+    public string Email { get; set; }
 
-    [Display(Name = "Номер телефону")]
-    [Required(ErrorMessage = "Номер телефону обов'язковий для заповнення.")]
-    [Phone(ErrorMessage = "Некоректний формат номера телефону.")]
-    public string PhoneNumber { get; }
+    [Display(Name = "PhoneNumber", ResourceType = typeof(UserViewModelResource))]
+    [Required(ErrorMessageResourceName = "RequiredError", ErrorMessageResourceType = typeof(UserViewModelResource))]
+    [Phone(ErrorMessageResourceName = "PhoneError", ErrorMessageResourceType = typeof(UserViewModelResource))]
+    public string PhoneNumber { get; set; }
 
     public UserViewModel(int id, string firstName, string lastName, string email, string phoneNumber)
     {

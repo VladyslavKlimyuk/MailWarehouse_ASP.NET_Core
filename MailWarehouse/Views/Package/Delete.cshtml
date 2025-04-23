@@ -1,0 +1,83 @@
+﻿@model MailWarehouse.ViewModels.PackageViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["DeleteTitle"];
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>@Localizer["AreYouSure"]</h3>
+<div>
+    <h4>@Localizer["PackageViewModel"]</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Localizer["TrackingNumber"]
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TrackingNumber
+        </dd>
+        <dt class="col-sm-2">
+            @Localizer["SenderId"]
+        </dt>
+        <dd class="col-sm-10">
+            @Model.SenderId
+        </dd>
+        <dt class="col-sm-2">
+            @Localizer["RecipientId"]
+        </dt>
+        <dd class="col-sm-10">
+            @Model.RecipientId
+        </dd>
+        <dt class="col-sm-2">
+            @Localizer["SenderAddress"]
+        </dt>
+        <dd class="col-sm-10">
+            @Model.SenderAddress
+        </dd>
+        <dt class="col-sm-2">
+            @Localizer["RecipientAddress"]
+        </dt>
+        <dd class="col-sm-10">
+            @Model.RecipientAddress
+        </dd>
+        <dt class="col-sm-2">
+            @Localizer["Weight"]
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Weight
+        </dd>
+        <dt class="col-sm-2">
+            @Localizer["Price"]
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Price
+        </dd>
+        <dt class="col-sm-2">
+            @Localizer["Status"]
+        </dt>
+        <dd class="col-sm-10">
+            @Localizer[Model.Status.ToString()]
+        </dd>
+        <dt class="col-sm-2">
+            @Localizer["CreatedAt"]
+        </dt>
+        <dd class="col-sm-10">
+            @Model.CreatedAt
+        </dd>
+        <dt class="col-sm-2">
+            @Localizer["DeliveredAt"]
+        </dt>
+        <dd class="col-sm-10">
+            @Model.DeliveredAt
+        </dd>
+    </dl>
+    <form asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="@Localizer["Delete"]" class="btn btn-danger" /> |
+        <a asp-action="Index">@Localizer["BackToList"]</a>
+    </form>
+</div>
