@@ -32,6 +32,7 @@ namespace MailWarehouse.Application.Services
         public void CreateUser(UserDto userDto)
         {
             var user = _mapper.Map<User>(userDto);
+            user.PasswordHash = HashPassword(userDto.Password);
             _userRepository.Add(user);
         }
 
@@ -44,6 +45,38 @@ namespace MailWarehouse.Application.Services
         public void DeleteUser(int id)
         {
             _userRepository.Delete(id);
+        }
+
+        public User Authenticate(string username, string password)
+        {
+            var user = _userRepository.GetByUsername(username);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            if (VerifyPassword(password, user.PasswordHash))
+            {
+                return user;
+            }
+
+            return null;
+        }
+
+        public User GetByUsername(string username)
+        {
+            return _userRepository.GetByUsername(username);
+        }
+
+        private string HashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
+        private bool VerifyPassword(string password, string hashedPassword)
+        {
+            return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
         }
     }
 }

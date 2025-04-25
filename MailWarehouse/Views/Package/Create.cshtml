@@ -7,62 +7,84 @@
     ViewData["Title"] = Localizer["PackageCreateTitle"];
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 class="text-center">@ViewData["Title"]</h1>
 
-<form asp-action="Create" method="post">
+<form asp-action="Create" method="post" class="mx-auto" style="max-width: 600px; text-align: center;">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="TrackingNumber" class="control-label"></label>
-        <input asp-for="TrackingNumber" class="form-control" />
-        <span asp-validation-for="TrackingNumber" class="text-danger"></span>
+    <div class="form-group" style="text-align: center;">
+        <div class="text-center">
+            <label asp-for="TrackingNumber" class="control-label d-block"></label>
+            <input asp-for="TrackingNumber" class="form-control mx-auto" style="max-width: 300px;" />
+            <span asp-validation-for="TrackingNumber" class="text-danger"></span>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="SenderId" class="control-label"></label>
-        <input asp-for="SenderId" class="form-control" />
-        <span asp-validation-for="SenderId" class="text-danger"></span>
+    <div class="form-group" style="text-align: center;">
+        <div class="text-center">
+            <label asp-for="SenderId" class="control-label d-block"></label>
+            <input asp-for="SenderId" class="form-control mx-auto" style="max-width: 300px;" />
+            <span asp-validation-for="SenderId" class="text-danger"></span>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="RecipientId" class="control-label"></label>
-        <input asp-for="RecipientId" class="form-control" />
-        <span asp-validation-for="RecipientId" class="form-control" />
-        <span asp-validation-for="RecipientId" class="text-danger"></span>
+    <div class="form-group" style="text-align: center;">
+        <div class="text-center">
+            <label asp-for="RecipientId" class="control-label d-block"></label>
+            <input asp-for="RecipientId" class="form-control mx-auto" style="max-width: 300px;" />
+            <span asp-validation-for="RecipientId" class="form-control" />
+            <span asp-validation-for="RecipientId" class="text-danger"></span>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="SenderAddress" class="control-label"></label>
-        <input asp-for="SenderAddress" class="form-control" />
-        <span asp-validation-for="SenderAddress" class="text-danger"></span>
+    <div class="form-group" style="text-align: center;">
+        <div class="text-center">
+            <label asp-for="SenderAddress" class="control-label d-block"></label>
+            <input asp-for="SenderAddress" class="form-control mx-auto" style="max-width: 300px;" />
+            <span asp-validation-for="SenderAddress" class="text-danger"></span>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="RecipientAddress" class="control-label"></label>
-        <input asp-for="RecipientAddress" class="form-control" />
-        <span asp-validation-for="RecipientAddress" class="text-danger"></span>
+    <div class="form-group" style="text-align: center;">
+        <div class="text-center">
+            <label asp-for="RecipientAddress" class="control-label d-block"></label>
+            <input asp-for="RecipientAddress" class="form-control mx-auto" style="max-width: 300px;" />
+            <span asp-validation-for="RecipientAddress" class="text-danger"></span>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Weight" class="control-label"></label>
-        <input asp-for="Weight" class="form-control" />
-        <span asp-validation-for="Weight" class="text-danger"></span>
+    <div class="form-group" style="text-align: center;">
+        <div class="text-center">
+            <label asp-for="Weight" class="control-label d-block"></label>
+            <input asp-for="Weight" class="form-control mx-auto" style="max-width: 300px;" />
+            <span asp-validation-for="Weight" class="text-danger"></span>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Price" class="control-label"></label>
-        <input asp-for="Price" class="form-control" />
-        <span asp-validation-for="Price" class="text-danger"></span>
+    <div class="form-group" style="text-align: center;">
+        <div class="text-center">
+            <label asp-for="Price" class="control-label d-block"></label>
+            <input asp-for="Price" class="form-control mx-auto" style="max-width: 300px;" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Status" class="control-label"></label>
-        <select asp-for="Status" asp-items="Html.GetEnumSelectList<MailWarehouse.Domain.Enums.PackageStatus>()" class="form-control"></select>
-        <span asp-validation-for="Status" class="text-danger"></span>
+    <div class="form-group" style="text-align: center;">
+        <div class="text-center">
+            <label asp-for="Status" class="control-label d-block"></label>
+            <select asp-for="Status" asp-items="Html.GetEnumSelectList<MailWarehouse.Domain.Enums.PackageStatus>()" class="form-control mx-auto" style="max-width: 300px;"></select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="CreatedAt" class="control-label"></label>
-        <input asp-for="CreatedAt" type="datetime-local" class="form-control" />
-        <span asp-validation-for="CreatedAt" class="text-danger"></span>
+    <div class="form-group" style="text-align: center;">
+        <div class="text-center">
+            <label asp-for="CreatedAt" class="control-label d-block"></label>
+            <input asp-for="CreatedAt" type="datetime-local" class="form-control mx-auto" style="max-width: 300px;" />
+            <span asp-validation-for="CreatedAt" class="text-danger"></span>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="DeliveredAt" class="control-label"></label>
-        <input asp-for="DeliveredAt" type="datetime-local" class="form-control" />
-        <span asp-validation-for="DeliveredAt" class="text-danger"></span>
+    <div class="form-group" style="text-align: center;">
+        <div class="text-center">
+            <label asp-for="DeliveredAt" class="control-label d-block"></label>
+            <input asp-for="DeliveredAt" type="datetime-local" class="form-control mx-auto" style="max-width: 300px;" />
+            <span asp-validation-for="DeliveredAt" class="text-danger"></span>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">@Localizer["Create"]</button>
+    <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary">@Localizer["Create"]</button>
+    </div>
 </form>
 
 @section Scripts {

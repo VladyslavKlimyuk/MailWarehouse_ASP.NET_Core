@@ -22,8 +22,17 @@ builder.Services.AddScoped<IPackageService, PackageService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddDbContext<PostalDeliveryDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-        b => b.MigrationsAssembly("MailWarehouse").EnableRetryOnFailure()));
+{
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()
+            .MigrationsAssembly("MailWarehouse")
+    );
+#if DEBUG
+    options.LogTo(Console.WriteLine, LogLevel.Information);
+    options.EnableSensitiveDataLogging();
+#endif
+});
 
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<PackageValidator>();
@@ -62,8 +71,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[]
     {
-        new CultureInfo("uk-UA")//,
-        //new CultureInfo("en-US")
+        new CultureInfo("uk-UA")
     };
 
     options.DefaultRequestCulture = new RequestCulture("uk-UA");
@@ -81,6 +89,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 var localizationOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value;
@@ -92,23 +102,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//app.UseSwagger();
-//app.UseSwaggerUI(c =>
-//{
-//    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-//    c.RoutePrefix = string.Empty;
-//});
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=User}/{action=Index}/{id?}");
+    pattern: "{controller=Auth}/{action=Login}");
 
 app.MapControllers();
 

@@ -33,15 +33,19 @@ public class PostalDeliveryDbContext : DbContext
         modelBuilder.Entity<Package>()
             .HasIndex(p => p.RecipientId);
 
-        modelBuilder.Entity<User>()
-            .Property(u => u.FirstName)
-            .HasMaxLength(255)
-            .IsRequired();
-
-        modelBuilder.Entity<User>()
-            .Property(u => u.LastName)
-            .HasMaxLength(255)
-            .IsRequired();
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable("User1");
+            entity.Property(u => u.FirstName)
+                .HasMaxLength(255)
+                .IsRequired();
+            entity.Property(u => u.LastName)
+                .HasMaxLength(255)
+                .IsRequired();
+            entity.Property(u => u.Username).HasColumnName("Username");
+            entity.Property(u => u.PasswordHash).HasColumnName("PasswordHash");
+            entity.Property(u => u.Roles).HasColumnName("Roles");
+        });
 
         modelBuilder.Entity<Package>()
             .Property(p => p.Weight)

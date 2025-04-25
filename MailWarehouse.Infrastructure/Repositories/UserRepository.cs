@@ -44,4 +44,9 @@ public class UserRepository : IUserRepository
             _context.SaveChanges();
         }
     }
+
+    public User GetByUsername(string username)
+    {
+        return _context.Users.FirstOrDefault(u => u.Username == username);
+    }
 }
