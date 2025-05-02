@@ -6,55 +6,119 @@
 @inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = Localizer["UserEditTitle"];
+    ViewData["Title"] = Localizer["Змінити дані користувача"];
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    .user-edit-container {
+        background-color: #f8f9fa;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin: 30px auto;
+        max-width: 400px;
+    }
 
-<h3>@Localizer["UserViewModel"]</h3>
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Localizer["FirstName"]
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["LastName"]
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["Email"]
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-    </dl>
-    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
-        <input type="hidden" asp-for="Id" />
-        <div class="@(Html.Raw("form-group"))">
-            @Html.LabelFor(model => model.FirstName, new { @class = "control-label" })
-            <input asp-for="FirstName" class="form-control" />
-            <span asp-validation-for="FirstName" class="text-danger"></span>
-        </div>
-        <div class="@(Html.Raw("form-group"))">
-            @Html.LabelFor(model => model.LastName, new { @class = "control-label" })
-            <input asp-for="LastName" class="form-control" />
-            <span asp-validation-for="LastName" class="text-danger"></span>
-        </div>
-        <div class="@(Html.Raw("form-group"))">
-            @Html.LabelFor(model => model.Email, new { @class = "control-label" })
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-        <input type="submit" value="@Localizer["Save"]" class="btn btn-primary" /> |
-        <a asp-action="Index">@Localizer["BackToList"]</a>
-    </form>
+    .user-edit-title {
+        color: #343a40;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .control-label {
+        display: block;
+        margin-bottom: 5px;
+        color: #495057;
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: 1px solid #007bff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        width: 100%;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+    .back-to-list {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+        .back-to-list a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+            .back-to-list a:hover {
+                color: #0056b3;
+                text-decoration: underline;
+            }
+</style>
+
+<div class="user-edit-container">
+    <h1 class="user-edit-title">@ViewData["Title"]</h1>
+
+    <h3>@Localizer["UserViewModel"]</h3>
+    <div>
+        <hr />
+        <form asp-action="EditUser" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <input type="submit" value="@Localizer["Зберегти"]" class="btn btn-primary" />
+        </form>
+    </div>
+    <div class="back-to-list">
+        <a asp-action="Index">@Localizer["Повернутися до списку"]</a>
+    </div>
 </div>
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

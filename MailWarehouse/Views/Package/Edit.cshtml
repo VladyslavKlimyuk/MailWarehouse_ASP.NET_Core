@@ -4,77 +4,151 @@
 @inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = Localizer["EditTitle"];
+    ViewData["Title"] = Localizer["Редагування посилки"];
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    .package-edit-container {
+        background-color: #f8f9fa;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin: 30px auto;
+        max-width: 600px;
+    }
 
-<h4>@Localizer["PackageViewModel"]</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="TrackingNumber" class="control-label"></label>
-                <input asp-for="TrackingNumber" class="form-control" />
-                <span asp-validation-for="TrackingNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SenderId" class="control-label"></label>
-                <input asp-for="SenderId" class="form-control" />
-                <span asp-validation-for="SenderId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RecipientId" class="control-label"></label>
-                <input asp-for="RecipientId" class="form-control" />
-                <span asp-validation-for="RecipientId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SenderAddress" class="control-label"></label>
-                <input asp-for="SenderAddress" class="form-control" />
-                <span asp-validation-for="SenderAddress" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RecipientAddress" class="control-label"></label>
-                <input asp-for="RecipientAddress" class="form-control" />
-                <span asp-validation-for="RecipientAddress" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Weight" class="control-label"></label>
-                <input asp-for="Weight" class="form-control" />
-                <span asp-validation-for="Weight" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" asp-items="Html.GetEnumSelectList<MailWarehouse.Domain.Enums.PackageStatus>()" class="form-control"></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" type="datetime-local" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeliveredAt" class="control-label"></label>
-                <input asp-for="DeliveredAt" type="datetime-local" class="form-control" />
-                <span asp-validation-for="DeliveredAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="@Localizer["Save"]" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+    .package-edit-title {
+        color: #343a40;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .control-label {
+        display: block;
+        margin-bottom: 5px;
+        color: #495057;
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: 1px solid #007bff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        width: auto;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+    .back-to-list {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+        .back-to-list a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+            .back-to-list a:hover {
+                color: #0056b3;
+                text-decoration: underline;
+            }
+</style>
+
+<div class="package-edit-container">
+    <h1 class="package-edit-title">@ViewData["Title"]</h1>
+    <h4>@Localizer["Посилки"]</h4>
+    <hr />
+    <form asp-action="Edit" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group">
+            <label asp-for="TrackingNumber" class="control-label"></label>
+            <input asp-for="TrackingNumber" class="form-control" />
+            <span asp-validation-for="TrackingNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SenderId" class="control-label"></label>
+            <input asp-for="SenderId" class="form-control" />
+            <span asp-validation-for="SenderId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="RecipientId" class="control-label"></label>
+            <input asp-for="RecipientId" class="form-control" />
+            <span asp-validation-for="RecipientId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SenderAddress" class="control-label"></label>
+            <input asp-for="SenderAddress" class="form-control" />
+            <span asp-validation-for="SenderAddress" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="RecipientAddress" class="control-label"></label>
+            <input asp-for="RecipientAddress" class="form-control" />
+            <span asp-validation-for="RecipientAddress" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Weight" class="control-label"></label>
+            <input asp-for="Weight" class="form-control" />
+            <span asp-validation-for="Weight" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price" class="control-label"></label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Status" class="control-label"></label>
+            <select asp-for="Status" asp-items="Html.GetEnumSelectList<MailWarehouse.Domain.Enums.PackageStatus>()" class="form-control"></select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CreatedAt" class="control-label"></label>
+            <input asp-for="CreatedAt" type="datetime-local" class="form-control" />
+            <span asp-validation-for="CreatedAt" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DeliveredAt" class="control-label"></label>
+            <input asp-for="DeliveredAt" type="datetime-local" class="form-control" />
+            <span asp-validation-for="DeliveredAt" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="@Localizer["Зберегти"]" class="btn btn-primary" />
+        </div>
+    </form>
 </div>
 
-<div>
-    <a asp-action="Index">@Localizer["BackToList"]</a>
+<div class="back-to-list">
+    <a asp-action="Index">@Localizer["Повернутися до списку"]</a>
 </div>
 
 @section Scripts {

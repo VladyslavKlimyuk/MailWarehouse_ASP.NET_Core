@@ -4,38 +4,113 @@
 @inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = Localizer["UserDeleteTitle"];
+    ViewData["Title"] = Localizer["Видалити користувача"];
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    .user-delete-container {
+        background-color: #f8f9fa;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin: 30px auto;
+        max-width: 400px;
+        text-align: center;
+    }
 
-<h3>@Localizer["AreYouSure"]</h3>
-<div>
-    <h4>@Localizer["UserViewModel"]</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Localizer["FirstName"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.FirstName
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["LastName"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.LastName
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["Email"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Email
-        </dd>
-    </dl>
-    <form asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="@Localizer["Delete"]" class="btn btn-danger" /> |
-        <a asp-action="Index">@Localizer["BackToList"]</a>
-    </form>
+    .user-delete-title {
+        color: #dc3545;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+    .warning-message {
+        color: #ffc107;
+        margin-bottom: 20px;
+        font-style: italic;
+    }
+
+    .details-info {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .details-label {
+        font-weight: bold;
+        color: #495057;
+    }
+
+    .details-value {
+        color: #212529;
+    }
+
+    .delete-actions {
+        margin-top: 20px;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+        border: 1px solid #dc3545;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #c82333;
+        }
+
+    .back-to-list {
+        margin-left: 10px;
+        color: #007bff;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+        .back-to-list:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+</style>
+
+<div class="user-delete-container">
+    <h1 class="user-delete-title">@ViewData["Title"]</h1>
+
+    <h3 class="warning-message">@Localizer["Ви впевнені?"]</h3>
+    <div class="details-info">
+        <h4>@Localizer["Користувач"]</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2 details-label">
+                @Localizer["Ім'я"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.FirstName
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Прізвище"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.LastName
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Пошта"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.Email
+            </dd>
+        </dl>
+    </div>
+    <div class="delete-actions">
+        <form asp-action="DeleteUser" method="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="@Localizer["Видалити"]" class="btn btn-danger" />
+            <a asp-action="Index" class="back-to-list">@Localizer["Повернутися до списку"]</a>
+        </form>
+    </div>
 </div>

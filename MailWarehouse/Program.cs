@@ -12,6 +12,8 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
+using MailWarehouse.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +36,13 @@ builder.Services.AddDbContext<PostalDeliveryDbContext>(options =>
 #endif
 });
 
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+})
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<PostalDeliveryDbContext>();
+
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<PackageValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
@@ -44,28 +53,30 @@ builder.Services.AddControllersWithViews()
     .AddDataAnnotationsLocalization(options =>
         options.DataAnnotationLocalizerProvider = (type, factory) =>
         {
+            var location = type.Assembly.GetName().Name ?? throw new InvalidOperationException("Assembly name cannot be null.");
             if (type.Namespace?.StartsWith("MailWarehouse.ViewModels") == true)
             {
-                return factory.Create(type.Name, typeof(MailWarehouse.Resources.UserViewModelResource).Assembly.GetName().Name);
+                return factory.Create(type.Name, location);
             }
             else if (type.Namespace?.StartsWith("MailWarehouse.Controllers") == true && type.Name.Contains("PackageController"))
             {
-                return factory.Create(type.Name.Replace("Controller", ""), typeof(MailWarehouse.Resources.PackageControllerResource).Assembly.GetName().Name);
+                return factory.Create(type.Name.Replace("Controller", ""), location);
             }
             else if (type.Namespace?.StartsWith("MailWarehouse.Controllers") == true && type.Name.Contains("User"))
             {
-                return factory.Create(type.Name.Replace("Controller", ""), typeof(MailWarehouse.Resources.UserControllerResource).Assembly.GetName().Name);
+                return factory.Create(type.Name.Replace("Controller", ""), location);
             }
             else if (type.FullName == "MailWarehouse.Resources.SharedResource")
             {
-                return factory.Create(type.Name, type.Assembly.GetName().Name);
+                return factory.Create(type.Name, location);
             }
             else if (type.FullName == "MailWarehouse.Resources.HomeControllerResource")
             {
-                return factory.Create(type.Name, type.Assembly.GetName().Name);
+                return factory.Create(type.Name, location);
             }
-            return factory.Create(type);
+            return factory.Create(type.Name, location);
         });
+
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -89,14 +100,25 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
+builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await SeedRolesAndAdminAsync(services);
+}
+
 var localizationOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value;
 app.UseRequestLocalization(localizationOptions);
 
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
@@ -117,3 +139,48 @@ app.MapControllerRoute(
 app.MapControllers();
 
 app.Run();
+
+async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
+{
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
+    if (!await roleManager.RoleExistsAsync("User"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("User"));
+    }
+    var adminEmail = configuration["AdminSettings:Email"];
+    var adminPassword = configuration["AdminSettings:Password"];
+    if (!string.IsNullOrEmpty(adminEmail) && !string.IsNullOrEmpty(adminPassword))
+    {
+        var adminUser = await userManager.FindByEmailAsync(adminEmail);
+        if (adminUser == null)
+        {
+            adminUser = new ApplicationUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
+            var createResult = await userManager.CreateAsync(adminUser, adminPassword);
+            if (createResult.Succeeded)
+            {
+                await userManager.AddToRoleAsync(adminUser, "Admin");
+            }
+            else
+            {
+                var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+                logger.LogError($"Failed to create default admin user: {string.Join(", ", createResult.Errors.Select(e => e.Description))}");
+            }
+        }
+        else if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+        {
+            await userManager.AddToRoleAsync(adminUser, "Admin");
+        }
+    }
+    else
+    {
+        var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogWarning("Admin email or password not configured in appsettings.json.");
+    }
+}

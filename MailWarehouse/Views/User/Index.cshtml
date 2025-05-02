@@ -4,45 +4,188 @@
 @inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = Localizer["UserIndexTitle"];
+    ViewData["Title"] = Localizer["Користувачі"];
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    .user-list-container {
+        background-color: #f8f9fa;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
 
-<p>
-    <a asp-action="Create" style="text-align: center;" class="btn btn-primary">@Localizer["CreateNew"]</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Localizer["FirstName"]</th>
-            <th>@Localizer["LastName"]</th>
-            <th>@Localizer["Email"]</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null && Model.Any())
-        {
-            foreach (var item in Model)
+    .user-list-title {
+        color: #343a40;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+    .create-new-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .create-new-button {
+        background-color: #28a745 !important;
+        color: #fff !important;
+        border: 2px solid #218838 !important;
+        border-radius: 10px;
+        padding: 12px 24px !important;
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-decoration: none !important;
+        transition: background-color 0.3s ease, transform 0.2s ease-in-out, border-color 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+        .create-new-button:hover {
+            background-color: #218838 !important;
+            border-color: #1e7e34 !important;
+            transform: scale(1.03);
+        }
+
+    .user-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+        .user-table thead {
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        .user-table th, .user-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .user-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .user-table tbody tr:hover {
+            background-color: #e9ecef;
+            transition: background-color 0.3s ease;
+        }
+
+    .action-buttons {
+        text-align: center;
+    }
+
+        .action-buttons a {
+            margin: 5px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            text-decoration: none !important;
+            display: inline-block;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+
+            .action-buttons a:hover {
+                transform: scale(1.03);
+            }
+
+            .action-buttons a.btn-warning {
+                background-color: #ffc107;
+                color: #212529;
+                border: 1px solid #ffc107;
+            }
+
+                .action-buttons a.btn-warning:hover {
+                    background-color: #e0a800;
+                }
+
+            .action-buttons a.btn-info {
+                background-color: #17a2b8;
+                color: #fff;
+                border: 1px solid #17a2b8;
+            }
+
+                .action-buttons a.btn-info:hover {
+                    background-color: #138496;
+                }
+
+            .action-buttons a.btn-danger {
+                background-color: #dc3545;
+                color: #fff;
+                border: 1px solid #dc3545;
+            }
+
+                .action-buttons a.btn-danger:hover {
+                    background-color: #c82333;
+                }
+
+            .action-buttons a.btn-secondary {
+                background-color: #6c757d;
+                color: #fff;
+                border: 1px solid #6c757d;
+            }
+
+                .action-buttons a.btn-secondary:hover {
+                    background-color: #5a6268;
+                }
+
+    .no-users {
+        padding: 20px;
+        font-style: italic;
+        color: #6c757d;
+        text-align: center;
+    }
+</style>
+
+<div class="user-list-container">
+    <h1 class="user-list-title">@ViewData["Title"]</h1>
+
+    <div class="create-new-container">
+        <a asp-action="Create" class="btn btn-success create-new-button">@Localizer["Створити"]</a>
+    </div>
+
+    <table class="table user-table">
+        <thead class="table-dark">
+            <tr>
+                <th class="text-center">@Localizer["Ім'я"]</th>
+                <th class="text-center">@Localizer["Прізвище"]</th>
+                <th class="text-center">@Localizer["Пошта"]</th>
+                <th class="text-center">@Localizer["Роль"]</th>
+                <th class="text-center">@Localizer["Дії"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">@item.FirstName</td>
+                        <td class="text-center">@item.LastName</td>
+                        <td class="text-center">@item.Email</td>
+                        <td class="text-center action-buttons">
+                            @**@
+                        </td>
+                        <td class="text-center action-buttons">
+                            <a asp-action="EditUser" asp-route-email="@item.Email" class="btn btn-sm btn-warning">@Localizer["Змінити"]</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">@Localizer["Деталі"]</a>
+                            <a asp-action="DeleteUser" asp-route-email="@item.Email" class="btn btn-sm btn-danger">@Localizer["Видалити"]</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-secondary">@Localizer["Роль"]</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>@item.FirstName</td>
-                    <td>@item.LastName</td>
-                    <td>@item.Email</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">@Localizer["Edit"]</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">@Localizer["Details"]</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">@Localizer["Delete"]</a>
-                    </td>
+                    <td colspan="5" class="text-center no-users">@Localizer["Немає користувачів"]</td>
                 </tr>
             }
-        }
-        else
-        {
-            <tr>
-                <td colspan="3">@Localizer["NoUsers"]</td>
-            </tr>
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>

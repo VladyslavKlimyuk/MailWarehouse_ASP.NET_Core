@@ -4,7 +4,7 @@
 @inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = Localizer["IndexTitle"];
+    ViewData["Title"] = Localizer["Посилки"];
 }
 
 <style>
@@ -24,27 +24,27 @@
 
     .create-new-container {
         display: flex;
-        justify-content: center; /* Центруємо кнопку */
+        justify-content: center;
         margin-bottom: 20px;
     }
 
     .create-new-button {
         background-color: #28a745 !important;
-        color: #fff !important; /* Білий текст */
-        border: 2px solid #218838 !important; /* Додали межу */
-        border-radius: 10px; /* Заокруглені кути */
-        padding: 12px 24px !important; /* Збільшили відступи */
-        font-size: 1.1rem; /* Збільшили розмір шрифту */
-        font-weight: bold; /* Жирний шрифт */
-        text-decoration: none !important; /* Прибрали підкреслення */
+        color: #fff !important;
+        border: 2px solid #218838 !important;
+        border-radius: 10px;
+        padding: 12px 24px !important;
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-decoration: none !important;
         transition: background-color 0.3s ease, transform 0.2s ease-in-out, border-color 0.3s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Додали легку тінь */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
         .create-new-button:hover {
-            background-color: #218838 !important; /* Змінили колір при наведенні */
-            border-color: #1e7e34 !important; /* Змінили колір межі при наведенні */
-            transform: scale(1.03); /* Легке збільшення при наведенні */
+            background-color: #218838 !important;
+            border-color: #1e7e34 !important;
+            transform: scale(1.03);
         }
 
     .package-table {
@@ -130,23 +130,23 @@
     <h1 class="mb-4 package-list-title">@ViewData["Title"]</h1>
 
     <div class="create-new-container">
-        <a asp-action="Create" class="btn btn-success create-new-button">@Localizer["CreateNew"]</a>
+        <a asp-action="Create" class="btn btn-success create-new-button">@Localizer["Створити"]</a>
     </div>
 
     <table class="table package-table">
         <thead class="table-dark">
             <tr>
-                <th>@Localizer["TrackingNumber"]</th>
-                <th>@Localizer["SenderId"]</th>
-                <th>@Localizer["RecipientId"]</th>
-                <th>@Localizer["SenderAddress"]</th>
-                <th>@Localizer["RecipientAddress"]</th>
-                <th>@Localizer["Weight"]</th>
-                <th>@Localizer["Price"]</th>
-                <th>@Localizer["Status"]</th>
-                <th>@Localizer["CreatedAt"]</th>
-                <th>@Localizer["DeliveredAt"]</th>
-                <th class="text-center">@Localizer["Actions"]</th>
+                <th>@Localizer["Трек-номер"]</th>
+                <th>@Localizer["ID відправника"]</th>
+                <th>@Localizer["ID отримувача"]</th>
+                <th>@Localizer["Адреса відправника"]</th>
+                <th>@Localizer["Адреса отримувача"]</th>
+                <th>@Localizer["Вага"]</th>
+                <th>@Localizer["Ціна"]</th>
+                <th>@Localizer["Поточний статус посилки"]</th>
+                <th>@Localizer["Створено"]</th>
+                <th>@Localizer["Доставлено"]</th>
+                <th class="text-center">@Localizer["Ролі"]</th>
             </tr>
         </thead>
         <tbody>
@@ -166,9 +166,9 @@
                         <td>@item.CreatedAt.ToString("dd.MM.yyyy")</td>
                         <td>@item.DeliveredAt?.ToString("dd.MM.yyyy")</td>
                         <td class="text-center action-buttons">
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">@Localizer["Edit"]</a>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">@Localizer["Details"]</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">@Localizer["Delete"]</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">@Localizer["Змінити"]</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">@Localizer["Деталі"]</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">@Localizer["Видалити"]</a>
                         </td>
                     </tr>
                 }
@@ -176,7 +176,7 @@
             else
             {
                 <tr>
-                    <td colspan="11" class="text-center no-packages">@Localizer["NoPackages"]</td>
+                    <td colspan="11" class="text-center no-packages">@Localizer["Немає посилок"]</td>
                 </tr>
             }
         </tbody>
