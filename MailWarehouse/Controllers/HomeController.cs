@@ -4,7 +4,6 @@ using Microsoft.Extensions.Localization;
 
 namespace MailWarehouse.Controllers;
 
-[Authorize]
 public class HomeController : Controller
 {
     private readonly IStringLocalizer<HomeController> _localizer;

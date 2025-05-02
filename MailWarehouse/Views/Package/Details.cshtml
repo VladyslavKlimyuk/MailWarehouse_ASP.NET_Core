@@ -4,78 +4,134 @@
 @inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = Localizer["DetailsTitle"];
+    ViewData["Title"] = Localizer["Деталі посилки"];
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    .package-details-container {
+        background-color: #f8f9fa;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin: 30px auto;
+        max-width: 600px;
+    }
 
-<div>
-    <h4>@Localizer["PackageViewModel"]</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Localizer["TrackingNumber"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.TrackingNumber
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["SenderId"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.SenderId
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["RecipientId"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.RecipientId
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["SenderAddress"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.SenderAddress
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["RecipientAddress"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.RecipientAddress
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["Weight"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Weight
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["Price"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Price
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["Status"]
-        </dt>
-        <dd class="col-sm-10">
-            @Localizer[Model.Status.ToString()]
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["CreatedAt"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.CreatedAt
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["DeliveredAt"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.DeliveredAt
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">@Localizer["Edit"]</a> |
-    <a asp-action="Index">@Localizer["BackToList"]</a>
+    .package-details-title {
+        color: #343a40;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+    .details-info {
+        margin-bottom: 20px;
+    }
+
+    .details-label {
+        font-weight: bold;
+        color: #495057;
+    }
+
+    .details-value {
+        color: #212529;
+    }
+
+    .action-links {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+        .action-links a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+            border-radius: 5px;
+            padding: 8px 12px;
+            border: 1px solid transparent;
+        }
+
+            .action-links a:hover {
+                color: #0056b3;
+                text-decoration: underline;
+                border-color: #0056b3;
+            }
+</style>
+
+<div class="package-details-container">
+    <h1 class="package-details-title">@ViewData["Title"]</h1>
+
+    <div class="details-info">
+        <h4>@Localizer["Посилки"]</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2 details-label">
+                @Localizer["Трек-номер"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.TrackingNumber
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["ID відправника"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.SenderId
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["ID отримувача"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.RecipientId
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Адреса відправника"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.SenderAddress
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Адреса отримувача"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.RecipientAddress
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Вага"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.Weight
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Ціна"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.Price
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Поточний статус посилки"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Localizer[Model.Status.ToString()]
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Створено"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.CreatedAt
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Доставлено"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.DeliveredAt
+            </dd>
+        </dl>
+    </div>
+
+    <div class="action-links">
+        <a asp-action="Edit" asp-route-id="@Model.Id">@Localizer["Змінити"]</a>
+        <span>|</span>
+        <a asp-action="Index">@Localizer["Повернутися до списку"]</a>
+    </div>
 </div>

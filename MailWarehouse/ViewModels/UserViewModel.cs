@@ -28,6 +28,11 @@ public class UserViewModel
     [Phone(ErrorMessageResourceName = "PhoneError", ErrorMessageResourceType = typeof(UserViewModelResource))]
     public string PhoneNumber { get; set; }
 
+    [Display(Name = "Password", ResourceType = typeof(UserViewModelResource))]
+    [Required(ErrorMessageResourceName = "RequiredError", ErrorMessageResourceType = typeof(UserViewModelResource))]
+    [DataType(DataType.Password)]
+    public string Password { get; set; }
+
     public UserViewModel(int id, string firstName, string lastName, string email, string phoneNumber)
     {
         Id = id;

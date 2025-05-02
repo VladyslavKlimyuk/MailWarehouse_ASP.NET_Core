@@ -1,8 +1,76 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Поштова система";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome!</h1>
-    <p>Learn about<a href="https://learn.microsoft.com/aspnet/core"> building Web apps with ASP.NET Core</a>.</p>
+<style>
+    .welcome-container {
+        background-color: #f8f9fa;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .welcome-title {
+        color: #343a40;
+        margin-bottom: 20px;
+        font-size: 2.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .welcome-subtitle {
+        color: #6c757d;
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+    }
+
+    .navigation-buttons {
+        margin-top: 2rem;
+    }
+
+    .navigation-button {
+        display: inline-block;
+        padding: 12px 24px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease, transform 0.2s ease-in-out, box-shadow 0.3s ease;
+        margin: 0 10px;
+    }
+
+    .packages-button {
+        background-color: #007bff;
+        color: #fff;
+        border: 2px solid #0056b3;
+    }
+
+        .packages-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.03);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+    .users-button {
+        background-color: #28a745;
+        color: #fff;
+        border: 2px solid #1e7e34;
+    }
+
+        .users-button:hover {
+            background-color: #1e7e34;
+            transform: scale(1.03);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+</style>
+
+<div class="welcome-container">
+    <h1 class="welcome-title">Поштова система</h1>
+    <p class="welcome-subtitle">Ласкаво просимо до нашої поштової системи!</p>
+    <div class="navigation-buttons">
+        <a asp-controller="Package" asp-action="Index" class="navigation-button packages-button mr-2">Посилки</a>
+        <a asp-controller="User" asp-action="Index" class="navigation-button users-button">Користувачі</a>
+    </div>
 </div>

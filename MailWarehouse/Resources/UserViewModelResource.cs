@@ -23,4 +23,13 @@ public static class UserViewModelResource
     public static string CreatedAt { get; } = "Дата створення";
     public static string UpdatedAt { get; } = "Дата оновлення";
     public static string RangeError { get; } = "Значення виходить за допустимі межі.";
+    public static string UserUpdateSuccess { get; } = "Користувача успішно оновлено.";
+    public static string UserDeleteSuccess { get; } = "Користувача успішно видалено.";
+    public static string RemoveRolesError { get; } = "Помилка видалення ролі";
+    public static string AddRolesError { get; } = "Помилка додавання ролі";
+    public static string RolesUpdatedSuccess { get; } = "Ролі успішно оновлено";
+    public static string EditUserRolesTitle { get; } = "Зміна ролі користувачів";
+    public static string SaveRoles { get; } = "Зберегти ролі";
+    public static string Roles { get; } = "Ролі";
+    public static string Password { get; } = "Пароль";
 }

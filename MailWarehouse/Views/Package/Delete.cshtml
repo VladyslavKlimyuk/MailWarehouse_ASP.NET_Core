@@ -4,80 +4,155 @@
 @inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = Localizer["DeleteTitle"];
+    ViewData["Title"] = Localizer["Вмдалити посилку"];
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    .package-delete-container {
+        background-color: #f8f9fa;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin: 30px auto;
+        max-width: 600px;
+        text-align: center;
+    }
 
-<h3>@Localizer["AreYouSure"]</h3>
-<div>
-    <h4>@Localizer["PackageViewModel"]</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Localizer["TrackingNumber"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.TrackingNumber
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["SenderId"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.SenderId
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["RecipientId"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.RecipientId
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["SenderAddress"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.SenderAddress
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["RecipientAddress"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.RecipientAddress
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["Weight"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Weight
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["Price"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Price
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["Status"]
-        </dt>
-        <dd class="col-sm-10">
-            @Localizer[Model.Status.ToString()]
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["CreatedAt"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.CreatedAt
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["DeliveredAt"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.DeliveredAt
-        </dd>
-    </dl>
-    <form asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="@Localizer["Delete"]" class="btn btn-danger" /> |
-        <a asp-action="Index">@Localizer["BackToList"]</a>
-    </form>
+    .package-delete-title {
+        color: #dc3545;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+    .warning-message {
+        color: #ffc107;
+        margin-bottom: 20px;
+        font-style: italic;
+    }
+
+    .details-info {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .details-label {
+        font-weight: bold;
+        color: #495057;
+    }
+
+    .details-value {
+        color: #212529;
+    }
+
+    .delete-actions {
+        margin-top: 20px;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+        border: 1px solid #dc3545;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #c82333;
+        }
+
+    .back-to-list {
+        margin-left: 10px;
+        color: #007bff;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+        .back-to-list:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+</style>
+
+<div class="package-delete-container">
+    <h1 class="package-delete-title">@ViewData["Title"]</h1>
+
+    <h3 class="warning-message">@Localizer["Ви впевнені?"]</h3>
+    <div class="details-info">
+        <h4>@Localizer["Посилки"]</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2 details-label">
+                @Localizer["Трек-номер"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.TrackingNumber
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["ID відправника"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.SenderId
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["ID отримувача"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.RecipientId
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Адреса відправника"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.SenderAddress
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Адреса отримувача"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.RecipientAddress
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Вага"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.Weight
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Ціна"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.Price
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Поточний статус посилки"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Localizer[Model.Status.ToString()]
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Створено"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.CreatedAt
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Доставлено"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.DeliveredAt
+            </dd>
+        </dl>
+    </div>
+    <div class="delete-actions">
+        <form asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="@Localizer["Видалити"]" class="btn btn-danger" />
+            <a asp-action="Index" class="back-to-list">@Localizer["Повернутися до списку"]</a>
+        </form>
+    </div>
 </div>
