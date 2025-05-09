@@ -4,9 +4,11 @@ using MailWarehouse.Application.Models;
 using MailWarehouse.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MailWarehouse.Controllers;
 
+//[Authorize]
 public class PackageController : Controller
 {
     private readonly IPackageService _packageService;

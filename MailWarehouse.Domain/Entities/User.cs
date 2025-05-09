@@ -1,12 +1,23 @@
-﻿namespace MailWarehouse.Domain.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
-public class User
+namespace MailWarehouse.Domain.Entities;
+
+public class User : IdentityUser
 {
-    public int Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public string Email { get; set; }
-    public string PhoneNumber { get; set; }
     public ICollection<Package> SentPackages { get; set; }
     public ICollection<Package> ReceivedPackages { get; set; }
+
+    //public virtual ICollection<IdentityUserRole<string>> UserRoles { get; set; }
+    //public virtual ICollection<IdentityRole> Roles { get; set; }
+
+    public User()
+    {
+        SentPackages = new List<Package>();
+        ReceivedPackages = new List<Package>();
+        //UserRoles = new List<IdentityUserRole<string>>();
+        //Roles = new List<IdentityRole>();
+    }
 }

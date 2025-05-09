@@ -1,13 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MailWarehouse.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace MailWarehouse.Domain.Interfaces;
 
 public interface IUserRepository
 {
-    IEnumerable<User> GetAll();
-    User GetById(int id);
-    void Add(User user);
-    void Update(User user);
-    void Delete(int id);
+    Task<IEnumerable<User>> GetAllIdentityUsersAsync();
+    Task<User> GetByIdAsync(string id);
+    Task<User> GetByUsernameAsync(string username);
+    Task<User> GetByEmailAsync(string email);
+    Task AddIdentityUserAsync(User applicationUser, string password);
+    Task UpdateIdentityUserAsync(User applicationUser);
+    Task DeleteIdentityUserAsync(User applicationUser);
+    Task<User> GetByUsernameAndPasswordAsync(string username, string password);
 }

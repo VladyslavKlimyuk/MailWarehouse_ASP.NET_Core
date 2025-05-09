@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>jQuery</id>
+    <version>1.4.1</version>
+    <authors>John Resig</authors>
+    <owners>John Resig</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>jQuery is a fast and concise JavaScript Library that simplifies HTML document traversing, event handling, animating, and Ajax interactions for rapid web development</description>
+    <summary>jQuery is a fast and concise JavaScript Library that simplifies HTML document traversing, event handling, animating, and Ajax interactions for rapid web development</summary>
+    <language>en-US</language>
+  </metadata>
+</package>
