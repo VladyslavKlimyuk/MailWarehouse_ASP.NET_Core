@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MailWarehouse.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
@@ -6,14 +7,12 @@ namespace MailWarehouse.Domain.Interfaces;
 
 public interface IUserRepository
 {
-    IEnumerable<User> GetAll();
-    IEnumerable<ApplicationUser> GetAllIdentityUsers();
-    User GetById(int id);
-    User GetByUsername(string username);
-    User GetByEmail(string email);
-    void Add(User user);
-    Task AddIdentityUser(ApplicationUser applicationUser, string password);
-    void Update(User user);
-    void Delete(int id);
-    User GetByUsernameAndPassword(string username, string password);
+    Task<IEnumerable<User>> GetAllIdentityUsersAsync();
+    Task<User> GetByIdAsync(string id);
+    Task<User> GetByUsernameAsync(string username);
+    Task<User> GetByEmailAsync(string email);
+    Task AddIdentityUserAsync(User applicationUser, string password);
+    Task UpdateIdentityUserAsync(User applicationUser);
+    Task DeleteIdentityUserAsync(User applicationUser);
+    Task<User> GetByUsernameAndPasswordAsync(string username, string password);
 }

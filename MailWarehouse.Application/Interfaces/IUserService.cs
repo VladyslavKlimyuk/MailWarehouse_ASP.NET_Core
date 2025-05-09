@@ -1,16 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MailWarehouse.Application.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace MailWarehouse.Application.Interfaces;
 
 public interface IUserService
 {
-    IEnumerable<UserDto> GetAllUsers();
-    UserDto GetUserById(int id);
-    UserDto GetUserByEmail(string email);
-    void CreateUser(UserDto userDto);
-    void UpdateUser(UserDto userDto);
-    void DeleteUser(int id);
-    Domain.Entities.User Authenticate(string username, string password);
-    Domain.Entities.User GetByUsername(string username);
+    Task<IEnumerable<UserDto>> GetAllUsersAsync();
+    Task<UserDto> GetUserByIdAsync(string id);
+    Task<UserDto> GetUserByEmailAsync(string email);
+    Task CreateUserAsync(UserDto userDto);
+    Task UpdateUserAsync(UserDto userDto);
+    Task DeleteUserAsync(string id);
+    Task<UserDto> AuthenticateAsync(string username, string password);
+    Task<UserDto> GetUserByUsernameAsync(string username);
+    Task<IdentityResult> ChangePasswordAsync(string userId, string currentPassword, string newPassword);
 }

@@ -36,9 +36,9 @@ builder.Services.AddDbContext<PostalDeliveryDbContext>(options =>
 #endif
 });
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = true;
+    options.SignIn.RequireConfirmedAccount = false;
 })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PostalDeliveryDbContext>();
@@ -108,7 +108,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    await SeedRolesAndAdminAsync(services);
+    //await SeedRolesAndAdminAsync(services);
 }
 
 var localizationOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value;
@@ -140,47 +140,47 @@ app.MapControllers();
 
 app.Run();
 
-async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
-{
-    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+//async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
+//{
+//    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+//    var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+//    var configuration = serviceProvider.GetRequiredService<IConfiguration>();
 
-    if (!await roleManager.RoleExistsAsync("Admin"))
-    {
-        await roleManager.CreateAsync(new IdentityRole("Admin"));
-    }
-    if (!await roleManager.RoleExistsAsync("User"))
-    {
-        await roleManager.CreateAsync(new IdentityRole("User"));
-    }
-    var adminEmail = configuration["AdminSettings:Email"];
-    var adminPassword = configuration["AdminSettings:Password"];
-    if (!string.IsNullOrEmpty(adminEmail) && !string.IsNullOrEmpty(adminPassword))
-    {
-        var adminUser = await userManager.FindByEmailAsync(adminEmail);
-        if (adminUser == null)
-        {
-            adminUser = new ApplicationUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
-            var createResult = await userManager.CreateAsync(adminUser, adminPassword);
-            if (createResult.Succeeded)
-            {
-                await userManager.AddToRoleAsync(adminUser, "Admin");
-            }
-            else
-            {
-                var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
-                logger.LogError($"Failed to create default admin user: {string.Join(", ", createResult.Errors.Select(e => e.Description))}");
-            }
-        }
-        else if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
-        {
-            await userManager.AddToRoleAsync(adminUser, "Admin");
-        }
-    }
-    else
-    {
-        var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
-        logger.LogWarning("Admin email or password not configured in appsettings.json.");
-    }
-}
+//    if (!await roleManager.RoleExistsAsync("Admin"))
+//    {
+//        await roleManager.CreateAsync(new IdentityRole("Admin"));
+//    }
+//    if (!await roleManager.RoleExistsAsync("User"))
+//    {
+//        await roleManager.CreateAsync(new IdentityRole("User"));
+//    }
+//    var adminEmail = configuration["AdminSettings:Email"];
+//    var adminPassword = configuration["AdminSettings:Password"];
+//    if (!string.IsNullOrEmpty(adminEmail) && !string.IsNullOrEmpty(adminPassword))
+//    {
+//        var adminUser = await userManager.FindByEmailAsync(adminEmail);
+//        if (adminUser == null)
+//        {
+//            adminUser = new ApplicationUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
+//            var createResult = await userManager.CreateAsync(adminUser, adminPassword);
+//            if (createResult.Succeeded)
+//            {
+//                await userManager.AddToRoleAsync(adminUser, "Admin");
+//            }
+//            else
+//            {
+//                var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+//                logger.LogError($"Failed to create default admin user: {string.Join(", ", createResult.Errors.Select(e => e.Description))}");
+//            }
+//        }
+//        else if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+//        {
+//            await userManager.AddToRoleAsync(adminUser, "Admin");
+//        }
+//    }
+//    else
+//    {
+//        var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+//        logger.LogWarning("Admin email or password not configured in appsettings.json.");
+//    }
+//}

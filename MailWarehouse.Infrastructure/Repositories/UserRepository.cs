@@ -11,33 +11,25 @@ namespace MailWarehouse.Infrastructure.Repositories;
 public class UserRepository : IUserRepository
 {
     private readonly PostalDeliveryDbContext _context;
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly UserManager<User> _userManager;
 
-    public UserRepository(PostalDeliveryDbContext context, UserManager<ApplicationUser> userManager)
+    public UserRepository(PostalDeliveryDbContext context, UserManager<User> userManager)
     {
         _context = context;
         _userManager = userManager;
     }
 
-    public IEnumerable<ApplicationUser> GetAllIdentityUsers()
+    public async Task<IEnumerable<User>> GetAllIdentityUsersAsync()
     {
-        return _userManager.Users.ToList();
+        return await _userManager.Users.ToListAsync();
     }
 
-    public IEnumerable<User> GetAll()
+    public async Task<User> GetByIdAsync(string id)
     {
-        return _context.Users
-            .Select(u => new User
-            {
-                Id = int.Parse(u.Id),
-                Username = u.UserName,
-                Email = u.Email,
-                PhoneNumber = u.PhoneNumber
-            })
-            .ToList();
+        return await _userManager.FindByIdAsync(id);
     }
 
-    public async Task AddIdentityUser(ApplicationUser applicationUser, string password)
+    public async Task AddIdentityUserAsync(User applicationUser, string password)
     {
         var result = await _userManager.CreateAsync(applicationUser, password);
         if (!result.Succeeded)
@@ -50,100 +42,48 @@ public class UserRepository : IUserRepository
         }
     }
 
-    public User GetById(int id)
+    public async Task UpdateIdentityUserAsync(User applicationUser)
     {
-        var applicationUser = _context.Users.Find(id.ToString());
-        if (applicationUser == null) return null;
-
-        return new User
+        var result = await _userManager.UpdateAsync(applicationUser);
+        if (!result.Succeeded)
         {
-            Id = int.Parse(applicationUser.Id),
-            Username = applicationUser.UserName,
-            Email = applicationUser.Email,
-            PhoneNumber = applicationUser.PhoneNumber
-        };
-    }
-
-    public void Add(User user)
-    {
-        var applicationUser = new ApplicationUser
-        {
-            Id = user.Id.ToString(),
-            UserName = user.Username,
-            Email = user.Email,
-            PhoneNumber = user.PhoneNumber
-        };
-
-        _context.Users.Add(applicationUser);
-        _context.SaveChanges();
-    }
-
-    public void Update(User user)
-    {
-        var existingUser = _context.Users.Find(user.Id.ToString());
-        if (existingUser != null)
-        {
-            existingUser.UserName = user.Username;
-            existingUser.Email = user.Email;
-            existingUser.PhoneNumber = user.PhoneNumber;
-            _context.SaveChanges();
-        }
-    }
-
-    public void Delete(int id)
-    {
-        var user = _context.Users.Find(id.ToString());
-        if (user != null)
-        {
-            _context.Users.Remove(user);
-            _context.SaveChanges();
-        }
-    }
-
-    public User GetByUsername(string username)
-    {
-        var applicationUser = _context.Users.FirstOrDefault(u => u.UserName == username);
-        if (applicationUser == null) return null;
-
-        return new User
-        {
-            Id = int.Parse(applicationUser.Id),
-            Username = applicationUser.UserName,
-            Email = applicationUser.Email,
-            PhoneNumber = applicationUser.PhoneNumber
-        };
-    }
-
-    public User GetByEmail(string email)
-    {
-        var applicationUser = _context.Users.FirstOrDefault(u => u.Email == email);
-        if (applicationUser == null) return null;
-
-        return new User
-        {
-            Id = int.Parse(applicationUser.Id),
-            Username = applicationUser.UserName,
-            Email = applicationUser.Email,
-            PhoneNumber = applicationUser.PhoneNumber
-        };
-    }
-
-    public User GetByUsernameAndPassword(string username, string password)
-    {
-        var applicationUser = _context.Users.FirstOrDefault(u => u.UserName == username);
-        if (applicationUser != null)
-        {
-            var result = _userManager.CheckPasswordAsync(applicationUser, password).Result;
-            if (result)
+            foreach (var error in result.Errors)
             {
-                return new User
-                {
-                    Id = int.Parse(applicationUser.Id),
-                    Username = applicationUser.UserName,
-                    Email = applicationUser.Email,
-                    PhoneNumber = applicationUser.PhoneNumber
-                };
+                Console.WriteLine($"Помилка оновлення користувача: {error.Description}");
             }
+            throw new Exception("Не вдалося оновити користувача.");
+        }
+    }
+
+    public async Task DeleteIdentityUserAsync(User applicationUser)
+    {
+        var result = await _userManager.DeleteAsync(applicationUser);
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+            {
+                Console.WriteLine($"Помилка видалення користувача: {error.Description}");
+            }
+            throw new Exception("Не вдалося видалити користувача.");
+        }
+    }
+
+    public async Task<User> GetByUsernameAsync(string username)
+    {
+        return await _userManager.FindByNameAsync(username);
+    }
+
+    public async Task<User> GetByEmailAsync(string email)
+    {
+        return await _userManager.FindByEmailAsync(email);
+    }
+
+    public async Task<User> GetByUsernameAndPasswordAsync(string username, string password)
+    {
+        var user = await _userManager.FindByNameAsync(username);
+        if (user != null && await _userManager.CheckPasswordAsync(user, password))
+        {
+            return user;
         }
         return null;
     }
