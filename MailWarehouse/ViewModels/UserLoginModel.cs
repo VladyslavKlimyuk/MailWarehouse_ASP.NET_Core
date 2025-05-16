@@ -10,4 +10,7 @@ public class UserLoginModel
     [Required(ErrorMessage = "Будь ласка, введіть пароль")]
     [DataType(DataType.Password)]
     public string Password { get; set; }
+
+    [Display(Name = "Запам'ятати мене?")]
+    public bool RememberMe { get; set; }
 }

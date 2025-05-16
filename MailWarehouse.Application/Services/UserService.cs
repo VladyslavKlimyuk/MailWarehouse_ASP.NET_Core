@@ -4,6 +4,7 @@ using MailWarehouse.Application.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MailWarehouse.Domain.Entities;
 using MailWarehouse.Domain.Interfaces;
 
@@ -13,87 +14,79 @@ namespace MailWarehouse.Application.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<User> _userManager;
 
-        public UserService(IUserRepository userRepository, IMapper mapper, UserManager<ApplicationUser> userManager)
+        public UserService(IUserRepository userRepository, IMapper mapper, UserManager<User> userManager)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _userManager = userManager;
         }
 
-        public IEnumerable<UserDto> GetAllUsers()
+        public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
         {
-            var applicationUsers = _userRepository.GetAllIdentityUsers();
-            var userDtos = _mapper.Map<IEnumerable<UserDto>>(applicationUsers);
-
-            foreach (var dto in userDtos)
-            {
-                Console.WriteLine($"Після мапінгу - Id: {dto.Id}, Username: {dto.Username}, Email: {dto.Email}, FirstName: {dto.FirstName}, LastName: {dto.LastName}, PhoneNumber: {dto.PhoneNumber}");
-            }
-
-            return userDtos;
+            var applicationUsers = await _userRepository.GetAllIdentityUsersAsync();
+            return _mapper.Map<IEnumerable<UserDto>>(applicationUsers);
         }
 
-        public UserDto GetUserById(int id)
+        public async Task<UserDto> GetUserByIdAsync(string id)
         {
-            var user = _userRepository.GetById(id);
+            var user = await _userRepository.GetByIdAsync(id);
             return _mapper.Map<UserDto>(user);
         }
 
-        public UserDto GetUserByEmail(string email)
+        public async Task<UserDto> GetUserByEmailAsync(string email)
         {
-            var user = _userRepository.GetByEmail(email);
+            var user = await _userRepository.GetByEmailAsync(email);
             return _mapper.Map<UserDto>(user);
         }
 
-        public async void CreateUser(UserDto userDto)
+        public async Task CreateUserAsync(UserDto userDto)
         {
-            var applicationUser = new ApplicationUser
-            {
-                UserName = userDto.Username ?? userDto.Email,
-                Email = userDto.Email,
-                PhoneNumber = userDto.PhoneNumber,
-                FirstName = userDto.FirstName,
-                LastName = userDto.LastName
-            };
+            var applicationUser = _mapper.Map<User>(userDto);
+            await _userRepository.AddIdentityUserAsync(applicationUser, userDto.Password);
+        }
 
-            var result = await _userManager.CreateAsync(applicationUser, userDto.Password);
-            if (!result.Succeeded)
+        public async Task UpdateUserAsync(UserDto userDto)
+        {
+            var existingUser = await _userRepository.GetByIdAsync(userDto.Id);
+            if (existingUser != null)
             {
-                foreach (var error in result.Errors)
-                {
-                    Console.WriteLine($"Помилка створення користувача: {error.Description}");
-                }
-                throw new Exception("Не вдалося створити користувача.");
+                _mapper.Map(userDto, existingUser);
+                await _userRepository.UpdateIdentityUserAsync(existingUser);
             }
         }
 
-        public void UpdateUser(UserDto userDto)
+        public async Task DeleteUserAsync(string id)
         {
-            var user = _userRepository.GetById(userDto.Id);
+            var user = await _userRepository.GetByIdAsync(id);
             if (user != null)
             {
-                user.Username = userDto.Username;
-                user.Email = userDto.Email;
-                user.PhoneNumber = userDto.PhoneNumber;
-                _userRepository.Update(user);
+                await _userRepository.DeleteIdentityUserAsync(user);
             }
         }
 
-        public void DeleteUser(int id)
+        public async Task<UserDto> AuthenticateAsync(string username, string password)
         {
-            _userRepository.Delete(id);
+            var user = await _userRepository.GetByUsernameAndPasswordAsync(username, password);
+            return _mapper.Map<UserDto>(user);
         }
 
-        public User Authenticate(string username, string password)
+        public async Task<UserDto> GetUserByUsernameAsync(string username)
         {
-            return _userRepository.GetByUsernameAndPassword(username, password);
+            var user = await _userRepository.GetByUsernameAsync(username);
+            return _mapper.Map<UserDto>(user);
         }
 
-        public User GetByUsername(string username)
+        public async Task<IdentityResult> ChangePasswordAsync(string userId, string currentPassword, string newPassword)
         {
-            return _userRepository.GetByUsername(username);
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user == null)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = "Користувача не знайдено." });
+            }
+
+            return await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
         }
     }
 }

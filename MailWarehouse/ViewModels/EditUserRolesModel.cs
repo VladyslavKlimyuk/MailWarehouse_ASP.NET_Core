@@ -1,6 +1,6 @@
 ﻿namespace MailWarehouse.ViewModels;
 
-public class EditUserRolesViewModel
+public class EditUserRolesModel
 {
     public string UserId { get; set; }
     public string Email { get; set; }

@@ -1,48 +1,58 @@
-﻿using MailWarehouse.Application.Interfaces;
+﻿using MailWarehouse.Domain.Entities;
 using MailWarehouse.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
+using System.Threading.Tasks;
 
+namespace MailWarehouse.Controllers;
+
+[AllowAnonymous]
 public class AuthController : Controller
 {
-    private readonly IUserService _userService;
+    private readonly SignInManager<User> _signInManager;
     private readonly IStringLocalizer<AuthController> _localizer;
-    private readonly IConfiguration _configuration;
 
-    public AuthController(IUserService userService, IStringLocalizer<AuthController> localizer, IConfiguration configuration)
+    public AuthController(SignInManager<User> signInManager, IStringLocalizer<AuthController> localizer)
     {
-        _userService = userService;
+        _signInManager = signInManager;
         _localizer = localizer;
-        _configuration = configuration;
     }
 
     [HttpGet]
-    public IActionResult Login()
+    public IActionResult Login(string returnUrl = null)
     {
+        ViewData["ReturnUrl"] = returnUrl;
         return View();
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Login(UserLoginModel model)
+    public async Task<IActionResult> Login(UserLoginModel model, string returnUrl = null)
     {
+        ViewData["ReturnUrl"] = returnUrl;
         if (ModelState.IsValid)
         {
-            var hardcodedUsername = _configuration.GetSection("Authentication")["Username"];
-            var hardcodedPassword = _configuration.GetSection("Authentication")["Password"];
-
-            if (model.Username == hardcodedUsername && model.Password == hardcodedPassword)
+            var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
+            if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Home");
+                return LocalRedirect(returnUrl ?? Url.Content("~/"));
             }
             else
             {
-                ViewBag.ErrorMessage = _localizer["Невірне ім'я користувача або пароль"];
+                ModelState.AddModelError(string.Empty, _localizer["Неправильний логін або пароль."]);
                 return View(model);
             }
         }
-
         return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
     }
 }

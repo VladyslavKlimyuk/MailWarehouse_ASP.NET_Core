@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MailWarehouse.Infrastructure;
 
-public class PostalDeliveryDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
+public class PostalDeliveryDbContext : IdentityDbContext<User, IdentityRole, string>
 {
     public PostalDeliveryDbContext(DbContextOptions<PostalDeliveryDbContext> options)
         : base(options)
