@@ -1,0 +1,118 @@
+﻿@model MailWarehouse.ViewModels.EditUserRolesViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Змінити роль користувача"];
+}
+
+<style>
+    .edit-roles-container {
+        background-color: #f8f9fa;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-roles-title {
+        color: #343a40;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .user-info {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        background-color: #e9ecef;
+    }
+
+    .role-checkbox-group {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        background-color: #fff;
+    }
+
+        .role-checkbox-group .form-check {
+            margin-bottom: 8px;
+        }
+
+    .save-button-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+
+    .save-button {
+        background-color: #007bff !important;
+        color: #fff !important;
+        border: 1px solid #007bff !important;
+        border-radius: 8px;
+        padding: 10px 20px !important;
+        font-size: 1rem;
+        text-decoration: none !important;
+        transition: background-color 0.3s ease;
+    }
+
+        .save-button:hover {
+            background-color: #0056b3 !important;
+        }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 10px;
+        color: #007bff;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+        .back-link:hover {
+            color: #0056b3;
+        }
+
+    .validation-summary-errors {
+        border: 1px solid red;
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="edit-roles-container">
+    <h2 class="edit-roles-title">@Localizer["Змінити роль користувача"]</h2>
+
+    <div class="user-info">
+        <p><strong>@Localizer["Email"]:</strong> @Model.Email</p>
+    </div>
+
+    <form method="post" asp-action="EditRoles" asp-route-userId="@Model.UserId">
+        <div class="role-checkbox-group">
+            @for (var i = 0; i < Model.Roles.Count; i++)
+            {
+                <div class="form-check">
+                    <input asp-for="Roles[i].IsSelected" class="form-check-input" />
+                    <label asp-for="Roles[i].IsSelected" class="form-check-label">
+                        @Model.Roles[i].RoleName
+                    </label>
+                    <input type="hidden" asp-for="Roles[i].RoleId" />
+                    <input type="hidden" asp-for="Roles[i].RoleName" />
+                </div>
+            }
+        </div>
+
+        <div class="save-button-container">
+            <button type="submit" class="btn btn-primary save-button">@Localizer["Зберегти роль"]</button>
+        </div>
+
+        <div asp-validation-summary="All" class="validation-summary-errors"></div>
+    </form>
+
+    <div>
+        <a asp-action="Index" class="back-link">@Localizer["Повернутися до списку"]</a>
+    </div>
+</div>

@@ -7,33 +7,89 @@
     ViewData["Title"] = Localizer["UserDetailsTitle"];
 }
 
-<h1>@ViewData["Title"]</h1>
+<style>
+    .user-details-container {
+        background-color: #f8f9fa;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin: 30px auto;
+        max-width: 400px;
+    }
 
-<div>
-    <h4>@Localizer["UserViewModel"]</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Localizer["FirstName"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.FirstName
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["LastName"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.LastName
-        </dd>
-        <dt class="col-sm-2">
-            @Localizer["Email"]
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Email
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">@Localizer["Edit"]</a> |
-    <a asp-action="Index">@Localizer["BackToList"]</a>
+    .user-details-title {
+        color: #343a40;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+    .details-info {
+        margin-bottom: 20px;
+    }
+
+    .details-label {
+        font-weight: bold;
+        color: #495057;
+    }
+
+    .details-value {
+        color: #212529;
+    }
+
+    .action-links {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+        .action-links a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+            border-radius: 5px;
+            padding: 8px 12px;
+            border: 1px solid transparent;
+        }
+
+            .action-links a:hover {
+                color: #0056b3;
+                text-decoration: underline;
+                border-color: #0056b3;
+            }
+</style>
+
+<div class="user-details-container">
+    <h1 class="user-details-title">@ViewData["Title"]</h1>
+
+    <div class="details-info">
+        <h4>@Localizer["UserViewModel"]</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2 details-label">
+                @Localizer["FirstName"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.FirstName
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["LastName"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.LastName
+            </dd>
+            <dt class="col-sm-2 details-label">
+                @Localizer["Email"]
+            </dt>
+            <dd class="col-sm-10 details-value">
+                @Model.Email
+            </dd>
+        </dl>
+    </div>
+
+    <div class="action-links">
+        <a asp-action="Edit" asp-route-id="@Model.Id">@Localizer["Edit"]</a>
+        <span>|</span>
+        <a asp-action="Index">@Localizer["BackToList"]</a>
+    </div>
 </div>

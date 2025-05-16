@@ -153,4 +153,16 @@
   <data name="Weight" xml:space="preserve">
     <value>Weight</value>
   </data>
+  <data name="IndexTitle" xml:space="preserve">
+    <value>Package List</value>
+  </data>
+  <data name="NoPackages" xml:space="preserve">
+    <value>No Packages</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="CreateNew" xml:space="preserve">
+    <value>Create New</value>
+  </data>
 </root>

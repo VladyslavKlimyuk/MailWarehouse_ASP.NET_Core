@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddRolesError" xml:space="preserve">
+    <value>Add roles error</value>
+  </data>
   <data name="AreYouSure" xml:space="preserve">
     <value>Are you sure?</value>
   </data>
@@ -125,6 +128,9 @@
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="EditUserRolesTitle" xml:space="preserve">
+    <value>Edit User Roles Title</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
@@ -138,23 +144,41 @@
   <data name="LastName" xml:space="preserve">
     <value>Last Name</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
   <data name="PhoneError" xml:space="preserve">
     <value>Incorrect phone number format</value>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>Phone Number</value>
   </data>
+  <data name="RemoveRolesError" xml:space="preserve">
+    <value>Remove roles error</value>
+  </data>
   <data name="RequiredError" xml:space="preserve">
     <value>{0} is must required</value>
   </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="RolesUpdatedSuccess" xml:space="preserve">
+    <value>Roles updated success</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="SaveRoles" xml:space="preserve">
+    <value>Save roles</value>
   </data>
   <data name="StringLengthError" xml:space="preserve">
     <value>The field cannot exceed 50 characters</value>
   </data>
   <data name="UserCreateTitle" xml:space="preserve">
     <value>User Create</value>
+  </data>
+  <data name="UserDeleteSuccess" xml:space="preserve">
+    <value>User delete success</value>
   </data>
   <data name="UserDeleteTitle" xml:space="preserve">
     <value>Delete User</value>
@@ -164,6 +188,9 @@
   </data>
   <data name="UserEditTitle" xml:space="preserve">
     <value>Edit User</value>
+  </data>
+  <data name="UserUpdateSuccess" xml:space="preserve">
+    <value>User update success</value>
   </data>
   <data name="UserViewModel" xml:space="preserve">
     <value>User Info</value>
